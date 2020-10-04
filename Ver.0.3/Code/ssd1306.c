@@ -69,8 +69,8 @@
     }
 #endif
 
-bit _OLED_Reverse = 0;     
-bit _OLED_Overlap = 1;
+__bit _OLED_Reverse = 0;     
+__bit _OLED_Overlap = 1;
 uint8 _buf[WIDTH * PAGES]; //全屏缓存,横向WIDTH个像素，纵向PAGES页，页内每8个像素作为一个字节，共WIDTH * PAGES个字节
 
 static char _x, _y;
@@ -132,14 +132,14 @@ void OLED_Write_Data(uint8 dat)
 
 /* 1：反显，0：正常
    1: Reverse, 0: Normal*/
-void OLED_Reverse(bit i)
+void OLED_Reverse(__bit i)
 {
     _OLED_Reverse = i;
 }
 
 /* 绘图模式：1：叠加，0：覆盖
    Draw Mode: 1: overlap, 0: Redraw*/
-void OLED_Overlap(bit i)
+void OLED_Overlap(__bit i)
 {
     _OLED_Overlap = i;
 }
@@ -177,7 +177,7 @@ void OLED_Clear(void)
     If the byte 1111 1111 we want to write cross two pages 0001 1111 1110 0000
     In redraw mode, to avoid affect adjacent content. Set offset=3, reserve_hl=1, when write 0001 1111. Set offset=5, reserve_hl=0 when write 1110 0000
     */
-void OLED_Draw_Byte(uint8 *pBuf, uint8 mask, uint8 offset, bit reserve_hl)
+void OLED_Draw_Byte(uint8 *pBuf, uint8 mask, uint8 offset, __bit reserve_hl)
 {
     if (_OLED_Overlap)
     {
@@ -386,7 +386,7 @@ void OLED_DrawLine(uint8 x0, uint8 y0, uint8 x1, uint8 y1)
 {
     char dx, dy, ystep;
     int err;
-    bit swapxy = 0;
+    __bit swapxy = 0;
 
     if (x0 > WIDTH - 1)
         x0 = WIDTH - 1;

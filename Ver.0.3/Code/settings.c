@@ -44,7 +44,7 @@
     }
 }
 
-void change_ScaleH(bit i)
+void change_ScaleH(__bit i)
 {
     if (i)
     {
@@ -60,7 +60,7 @@ void change_ScaleH(bit i)
     }
 }
 
-void change_TriggerValue(bit i)
+void change_TriggerValue(__bit i)
 {
     if (i)
     {
@@ -84,7 +84,7 @@ void change_TriggerValue(bit i)
     }
 }
 
-void change_LSB(bit i)
+void change_LSB(__bit i)
 {
     if (i)
     {
@@ -107,7 +107,7 @@ void change_PlotMode()
     PlotMode = ~PlotMode;
 }
 
-void change_TriMode(bit i)
+void change_TriMode(__bit i)
 {
     if (i)
     {
@@ -125,7 +125,7 @@ void change_TriMode(bit i)
     }
 }
 
-void change_TriPosOffset(bit i)
+void change_TriPosOffset(__bit i)
 {
     if (i)
     {
@@ -141,7 +141,7 @@ void change_TriPosOffset(bit i)
     }
 }
 
-void change_OptionInChart(bit i)
+void change_OptionInChart(__bit i)
 {
     if (i)
     {
@@ -159,7 +159,7 @@ void change_OptionInChart(bit i)
     }
 }
 
-void change_OptionInSettings(bit i)
+void change_OptionInSettings(__bit i)
 {
     if (i)
     {
@@ -175,7 +175,7 @@ void change_OptionInSettings(bit i)
     }
 }
 
-void change_RulerVMax(bit i)
+void change_RulerVMax(__bit i)
 {
     if (i)
     {
@@ -215,7 +215,7 @@ void change_RulerVMax(bit i)
     }
 }
 
-void change_RulerV(bit i)
+void change_RulerV(__bit i)
 {
     ScaleV_Auto = 0;
     if (i)
@@ -240,7 +240,7 @@ void change_RulerV(bit i)
     }
 }
 
-void change_OLED_Brightness(bit i)
+void change_OLED_Brightness(__bit i)
 {
     if (i)
     {
@@ -257,7 +257,7 @@ void change_OLED_Brightness(bit i)
     OLED_BrightnessChanged = 1;
 }
 
-void Change_Val(bit i)
+void Change_Val(__bit i)
 {
     /* 按下同时旋转编码器
        Rotating Encoder while pressing */
@@ -413,7 +413,7 @@ void check_Options()
     Check_MinTimeInterval();
 }
 
-bit Save_Options()
+__bit Save_Options()
 {
     uint8 ops[15];
     uint8 *p;

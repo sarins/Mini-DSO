@@ -1,8 +1,8 @@
 #ifndef DELAY_H
 #define DELAY_H
 
-#include "reg51.h"
-#include <intrins.h>
+#include "8051.h"
+//#include <intrins.h>
 #include "config_stc.h"
 #include "global.h"
 
@@ -18,8 +18,8 @@
 #define uint32 unsigned long int
 #endif
 
-bit Delay800ms_Long_Press(void);
-bit Delay300ms_Double_Click(void);
+__bit Delay800ms_Long_Press(void);
+__bit Delay300ms_Double_Click(void);
 void Delay500us(void);
 void Delay5ms(void);
 void Delay50ms(void);

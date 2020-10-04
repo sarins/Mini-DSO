@@ -1,5 +1,6 @@
 /* EEPROM Functions. 
    Reference STC8 Series Datasheet */
+#include "global.h"
 #include "eeprom.h"
 
 /*----------------------------
@@ -64,7 +65,7 @@ void IapEraseSector(uint16 addr)
 /* Write EEPROM
    s: Pointer to parameters
    para_num: Length of parameters */
-bit EEPROM_Save(uint8 *s, uint8 para_num)
+__bit EEPROM_Save(uint8 *s, uint8 para_num)
 {
     int i; //不要改成uint8，误改了好几次！！
 	//扇区擦除

@@ -52,8 +52,8 @@
 					   //12Î»ADC·¶Î§=2^12=4095,BGV=1349mV
 #define LSB_MIN 50
 
-void Change_Val(bit);
-bit Save_Options();
+void Change_Val(__bit);
+__bit Save_Options();
 void Read_Options();
 void check_Options();
 void Check_MinTimeInterval();

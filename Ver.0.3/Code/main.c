@@ -174,7 +174,7 @@
     4. 用户可设定触发电平
 */
 
-#include <reg51.h>
+#include "8051.h"
 #include "global.h"
 #include "delay.h"
 #include "adc_stc8.h"
@@ -552,7 +552,7 @@ void Scan_EC11(void)
 
 /* 编码器旋转中断
    Interrput for Encoder Rotated */
-void INT0_interrupt(void) interrupt INT_0
+void INT0_interrupt(void) __interrupt INT_0
 {
     Delay500us();
 
@@ -572,7 +572,7 @@ void INT0_interrupt(void) interrupt INT_0
 
 /* 编码器点击中断
    Interrput for Encoder Pressed */
-void INT1_interrupt(void) interrupt INT_1
+void INT1_interrupt(void) __interrupt INT_1
 {
     Delay50ms();
     if (!EC11_KEY)
@@ -664,7 +664,7 @@ void INT1_interrupt(void) interrupt INT_1
 
 /* 为更新Vbat计时
    Timer for updating Vbat */
-void TIMER0_interrupt(void) interrupt TIMER_0
+void TIMER0_interrupt(void) __interrupt TIMER_0
 {
     static uint8 n;
 

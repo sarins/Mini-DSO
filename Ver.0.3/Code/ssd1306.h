@@ -27,7 +27,7 @@
 #ifndef SSD1306_H
 #define SSD1306_H
 
-#include "REG51.h"
+#include "8051.h"
 #include <string.h>
 #include <stdlib.h>
 #include "delay.h"
@@ -86,6 +86,6 @@ void OLED_DrawVLine(uint8 x, uint8 y, uint8 w);
 void OLED_DrawLine(uint8 x0, uint8 y0, uint8 x1, uint8 y1);
 void OLED_DrawBMP(uint8 x0, uint8 y0, uint8 x1, uint8 y1, uint8 *BMP, uint16 len);
 void OLED_SetFontWidth(uint8 w);
-void OLED_Reverse(bit i);
-void OLED_Overlap(bit i);
+void OLED_Reverse(__bit i);
+void OLED_Overlap(__bit i);
 #endif

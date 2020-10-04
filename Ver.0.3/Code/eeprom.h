@@ -1,7 +1,7 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
-#include "intrins.h"
+//#include "intrins.h"
 
 #ifndef uint8
 #define uint8 unsigned char
@@ -17,18 +17,30 @@
 
 /*IAP/ISP ÌØÊâ¹¦ÄÜ¼Ä´æÆ÷
 IAP/ISP Special Function Register*/
-sfr IAP_DATA = 0xc2;
-sfr IAP_ADDRH = 0xc3;
-sfr IAP_ADDRL = 0xc4;
-sfr IAP_CMD = 0xc5;
-sfr IAP_TRIG = 0xc6;
-sfr IAP_CONTR = 0xc7;
-sfr ISP_DATA = 0xc2;
-sfr ISP_ADDRH = 0xc3;
-sfr ISP_ADDRL = 0xc4;
-sfr ISP_CMD = 0xc5;
-sfr ISP_TRIG = 0xc6;
-sfr ISP_CONTR = 0xc7;
+// sfr IAP_DATA = 0xc2;
+// sfr IAP_ADDRH = 0xc3;
+// sfr IAP_ADDRL = 0xc4;
+// sfr IAP_CMD = 0xc5;
+// sfr IAP_TRIG = 0xc6;
+// sfr IAP_CONTR = 0xc7;
+// sfr ISP_DATA = 0xc2;
+// sfr ISP_ADDRH = 0xc3;
+// sfr ISP_ADDRL = 0xc4;
+// sfr ISP_CMD = 0xc5;
+// sfr ISP_TRIG = 0xc6;
+// sfr ISP_CONTR = 0xc7;
+__sfr __at (0xc2) IAP_DATA;
+__sfr __at (0xc3) IAP_ADDRH;
+__sfr __at (0xc4) IAP_ADDRL;
+__sfr __at (0xc5) IAP_CMD;
+__sfr __at (0xc6) IAP_TRIG;
+__sfr __at (0xc7) IAP_CONTR;
+__sfr __at (0xc2) ISP_DATA;
+__sfr __at (0xc3) ISP_ADDRH;
+__sfr __at (0xc4) ISP_ADDRL;
+__sfr __at (0xc5) ISP_CMD;
+__sfr __at (0xc6) ISP_TRIG;
+__sfr __at (0xc7) ISP_CONTR;
 
 #define IAP_IDL 0x00   //¿Õ²Ù×÷ / No operation
 #define IAP_READ 0x01  //¶ÁEEPROM / Read EEPROM
@@ -63,7 +75,7 @@ Start Address of Sector
 Each Sector contains 512 bytes*/
 #define IAP_ADDRESS 0x0000
 
-bit EEPROM_Save(uint8 *s, char para_num);
+__bit EEPROM_Save(uint8 *s, char para_num);
 void EEPROM_Read(uint8 *s, char para_num);
 
 #endif

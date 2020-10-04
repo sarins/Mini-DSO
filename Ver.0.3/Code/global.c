@@ -1,50 +1,68 @@
 #include "global.h"
 
-uint16 Lsb;                                                //ÊäÈë²ÉÑù¶Ë·ÖÑ¹ÏµÊýx100 / Input voltage dividing coefficient x 100
-uint16 VBat;                                               //µç³ØµçÑ¹ / Voltage of battery
-uint8 WaveLength;                                          //²¨³¤ / Wave length
-uint32 WaveFreq;                                           //²¨ÆµÂÊ / Wave frequency
-int16 TriLevel;                                            //ÓÃ»§Éè¶¨´¥·¢Öµ£¬mV / Trigger Level in mV
-uint8 TriPos;                                              //´¥·¢Î»ÖÃ / Trigger Position
-int8 TriPosOffset;                                         //´¥·¢Î»ÖÃÆ«ÒÆÁ¿ / Trigger Position Offset
-int16 RulerVMin, RulerVMax;                                //×ÝÖáµçÑ¹×î´ó×îÐ¡Öµ / Min and Max voltage on vertical ruler
-uint16 VMax, VMin;                                         //ÆÁÄ»²¨ÐÎµÄ×î´óºÍ×îÐ¡µçÑ¹mV£¬ÉÏÏÞ65535mV
-uint16 *BGV;                                               //ÄÚ²¿BG²Î¿¼µçÑ¹
-uint16 ADCbg;                                              //ÄÚ²¿BG²Î¿¼ADC
-uint16 TriggerADC;                                         //´¥·¢ÖµADC
-uint16 WaveLengthSumNum;                                   //Æ½¾ù²¨ÐÎ³¤¶ÈÇóºÍ´ÎÊý
-uint32 WaveLengthSum;                                      //Æ½¾Ö²¨ÐÎ³¤¶ÈÇóºÍ
-int8 ScaleH_tmp;                                           //ÁÙÊ±¼ÇÂ¼²ÉÑùÍê³ÉµÄÊ±¼äÇø¼ä
-uint8 OLED_Brightness;                                     //OLEDÁÁ¶È1-254
-bit OLED_BrightnessChanged;                                //OLEDÐÞ¸Ä±êÖ¾Î»
-bit DisplayUpdate;                                         //¸üÐÂÆÁÄ»ÐÅÏ¢±êÖ¾Î»
-bit EC11PressAndRotate;                                    //EC11±àÂëÆ÷°´ÏÂÍ¬Ê±Ðý×ª±êÖ¾Î»
-bit DisplayUpdate;                                         //¸üÐÂÆÁÄ»ÐÅÏ¢±êÖ¾Î»
-bit ClearDisplay;                                          //Çå¿ÕÆÁÄ»±êÖ¾Î»
-bit ClearWave;                                             //Çå¿Õ²¨ÐÎ±êÖ¾Î»
-bit ADCRunning;                                            //ADC²ÉÑù±êÖ¾Î»
-bit ADCInterrupt;                                          //ADC²ÉÑùÖÐ¶Ï±êÖ¾Î»
-bit UpdateVbat;                                            //¸üÐÂµç³ØµçÑ¹ÐÅÏ¢±êÖ¾Î»
-bit OptionChanged;                                         //ÉèÖÃ±»ÐÞ¸Ä±êÖ¾Î»
-bit InSettings;                                            //½øÈëÉèÖÃ½çÃæ±êÖ¾Î»
-bit PlotMode;                                              //»æÍ¼Ä£Ê½ 0:Vect 1:Dots
-bit TriSlope;                                              //´¥·¢·½Ïò£¬1£ºÉÏÉý´¥·¢£¬0£ºÏÂ½µ´¥·¢
-bit TriFail;                                               //´¥·¢Ê§°Ü±êÖ¾Î»
-bit WaveScroll;                                            //²¨ÐÎ¹ö¶¯±êÖ¾Î»
-bit WaveUpdate;                                            //¸üÐÂ²¨ÐÎ±êÖ¾Î»
-bit ScaleV_Auto;                                           //×Ô¶¯Á¿³Ì±êÖ¾Î»
-bit ADCComplete;                                           //ADCÍê³É²ÉÑù£¬Îªµ¥´Î²ÉÑù·þÎñ
-int8 ScaleH = 2;                                           //Ê±¼äÇø¼ä£¬0-11¶ÔÓ¦500ms-100us
-int8 OptionInSettings;                                     //ÉèÖÃ½çÃæµÄÑ¡ÏîÐòºÅ, 0:TriS, 1:PlotMode, 2:LSB
-int8 OptionInChart;                                        //Ö÷½çÃæµÄÑ¡ÏîÐòºÅ, 0:ScaleH, 1:ScaleV, 2:TriLevel, 3:TriSlope, 4:TriMode
-int8 TriMode;                                              //´¥·¢·½Ê½£¬2:µ¥´Î 1£ºÆÕÍ¨£¬0£º×Ô¶¯
-                                                           //×Ô¶¯Ä£Ê½:Á¬Ðø²ÉÑù£¬ÓÃ»§ÊÖ¶¯Í£Ö¹
-                                                           //ÆÕÍ¨£º´¥·¢ºóÍ£Ö¹²ÉÑù£¬²¢×Ô¶¯µÈ´ýÏÂ´Î´¥·¢
-                                                           //µ¥´Î£º´¥·¢ºóÍ£Ö¹²ÉÑù£¬ÓÃ»§ÊÖ¶¯¿ªÊ¼µÈ´ýÏÂ´Î´¥·¢
-uint16 ADCbuf[SAMPLE_NUM];                                 //»º´æÔ­Ê¼²ÉÑùÊý¾Ý
-uint8 code *PlotModeTxt[] = {"Vect", "Dots"};              //»æÍ¼Ä£Ê½ÎÄ×Ö
-uint8 code *TriModeTxt[] = {"Auto  ", "Normal", "Single"}; //´¥·¢·½Ê½ÎÄ×Ö
-uint8 code *ScaleHTxt[] =                                  //Ë®Æ½±ê³ßÎÄ×Ö
+uint16 Lsb;                                                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½Ñ¹Ïµï¿½ï¿½x100 / Input voltage dividing coefficient x 100
+uint16 VBat;                                               //ï¿½ï¿½Øµï¿½Ñ¹ / Voltage of battery
+uint8 WaveLength;                                          //ï¿½ï¿½ï¿½ï¿½ / Wave length
+uint32 WaveFreq;                                           //ï¿½ï¿½Æµï¿½ï¿½ / Wave frequency
+int16 TriLevel;                                            //ï¿½Ã»ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½mV / Trigger Level in mV
+uint8 TriPos;                                              //ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ / Trigger Position
+int8 TriPosOffset;                                         //ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½ / Trigger Position Offset
+int16 RulerVMin, RulerVMax;                                //ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ / Min and Max voltage on vertical ruler
+uint16 VMax, VMin;                                         //ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Ñ¹mVï¿½ï¿½ï¿½ï¿½ï¿½ï¿½65535mV
+uint16 *BGV;                                               //ï¿½Ú²ï¿½BGï¿½Î¿ï¿½ï¿½ï¿½Ñ¹
+uint16 ADCbg;                                              //ï¿½Ú²ï¿½BGï¿½Î¿ï¿½ADC
+uint16 TriggerADC;                                         //ï¿½ï¿½ï¿½ï¿½ÖµADC
+uint16 WaveLengthSumNum;                                   //Æ½ï¿½ï¿½ï¿½ï¿½ï¿½Î³ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ï¿½ï¿½
+uint32 WaveLengthSum;                                      //Æ½ï¿½Ö²ï¿½ï¿½Î³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+int8 ScaleH_tmp;                                           //ï¿½ï¿½Ê±ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+uint8 OLED_Brightness;                                     //OLEDï¿½ï¿½ï¿½ï¿½1-254
+// bit OLED_BrightnessChanged;                                //OLEDï¿½Þ¸Ä±ï¿½Ö¾Î»
+// bit DisplayUpdate;                                         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ï¢ï¿½ï¿½Ö¾Î»
+// bit EC11PressAndRotate;                                    //EC11ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½×ªï¿½ï¿½Ö¾Î»
+// bit DisplayUpdate;                                         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ï¢ï¿½ï¿½Ö¾Î»
+// bit ClearDisplay;                                          //ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ö¾Î»
+// bit ClearWave;                                             //ï¿½ï¿½Õ²ï¿½ï¿½Î±ï¿½Ö¾Î»
+// bit ADCRunning;                                            //ADCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+// bit ADCInterrupt;                                          //ADCï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï±ï¿½Ö¾Î»
+// bit UpdateVbat;                                            //ï¿½ï¿½ï¿½Âµï¿½Øµï¿½Ñ¹ï¿½ï¿½Ï¢ï¿½ï¿½Ö¾Î»
+// bit OptionChanged;                                         //ï¿½ï¿½ï¿½Ã±ï¿½ï¿½Þ¸Ä±ï¿½Ö¾Î»
+// bit InSettings;                                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+// bit PlotMode;                                              //ï¿½ï¿½Í¼Ä£Ê½ 0:Vect 1:Dots
+// bit TriSlope;                                              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½
+// bit TriFail;                                               //ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü±ï¿½Ö¾Î»
+// bit WaveScroll;                                            //ï¿½ï¿½ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+// bit WaveUpdate;                                            //ï¿½ï¿½ï¿½Â²ï¿½ï¿½Î±ï¿½Ö¾Î»
+// bit ScaleV_Auto;                                           //ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ì±ï¿½Ö¾Î»
+// bit ADCComplete;                                           //ADCï¿½ï¿½É²ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+__bit OLED_BrightnessChanged;                                //OLEDï¿½Þ¸Ä±ï¿½Ö¾Î»
+__bit DisplayUpdate;                                         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ï¢ï¿½ï¿½Ö¾Î»
+__bit EC11PressAndRotate;                                    //EC11ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½×ªï¿½ï¿½Ö¾Î»
+__bit DisplayUpdate;                                         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ï¢ï¿½ï¿½Ö¾Î»
+__bit ClearDisplay;                                          //ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ö¾Î»
+__bit ClearWave;                                             //ï¿½ï¿½Õ²ï¿½ï¿½Î±ï¿½Ö¾Î»
+__bit ADCRunning;                                            //ADCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+__bit ADCInterrupt;                                          //ADCï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï±ï¿½Ö¾Î»
+__bit UpdateVbat;                                            //ï¿½ï¿½ï¿½Âµï¿½Øµï¿½Ñ¹ï¿½ï¿½Ï¢ï¿½ï¿½Ö¾Î»
+__bit OptionChanged;                                         //ï¿½ï¿½ï¿½Ã±ï¿½ï¿½Þ¸Ä±ï¿½Ö¾Î»
+__bit InSettings;                                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+__bit PlotMode;                                              //ï¿½ï¿½Í¼Ä£Ê½ 0:Vect 1:Dots
+__bit TriSlope;                                              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½
+__bit TriFail;                                               //ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü±ï¿½Ö¾Î»
+__bit WaveScroll;                                            //ï¿½ï¿½ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+__bit WaveUpdate;                                            //ï¿½ï¿½ï¿½Â²ï¿½ï¿½Î±ï¿½Ö¾Î»
+__bit ScaleV_Auto;                                           //ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ì±ï¿½Ö¾Î»
+__bit ADCComplete;
+int8 ScaleH = 2;                                           //Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ä£¬0-11ï¿½ï¿½Ó¦500ms-100us
+int8 OptionInSettings;                                     //ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½, 0:TriS, 1:PlotMode, 2:LSB
+int8 OptionInChart;                                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½, 0:ScaleH, 1:ScaleV, 2:TriLevel, 3:TriSlope, 4:TriMode
+int8 TriMode;                                              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½2:ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½0ï¿½ï¿½ï¿½Ô¶ï¿½
+                                                           //ï¿½Ô¶ï¿½Ä£Ê½:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ö¶ï¿½Í£Ö¹
+                                                           //ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½È´ï¿½ï¿½Â´Î´ï¿½ï¿½ï¿½
+                                                           //ï¿½ï¿½ï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½Ê¼ï¿½È´ï¿½ï¿½Â´Î´ï¿½ï¿½ï¿½
+uint16 ADCbuf[SAMPLE_NUM];                                 //ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+uint8 __code *PlotModeTxt[] = {"Vect", "Dots"};              //ï¿½ï¿½Í¼Ä£Ê½ï¿½ï¿½ï¿½ï¿½
+uint8 __code *TriModeTxt[] = {"Auto  ", "Normal", "Single"}; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+uint8 __code *ScaleHTxt[] =                                  //Ë®Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         "500ms", //0
         "200ms", //1

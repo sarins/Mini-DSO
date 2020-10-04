@@ -22,9 +22,11 @@
 #define int16 signed int
 #endif
 
-#define SAMPLE_NUM 220      //²ÉÑù»º´æµãÊý£¬ÏÔÊ¾²¨ÐÎÐè101¸öµã£¬²éÕÒ´¥·¢µã´ÓµÚ51¸öµãµ½µÚSAMPLE_NUM-50¸öµã£¬
-#define PRE_BUF_NUM 62      //µ¥´Î´¥·¢ºÍÆÕÍ¨´¥·¢µÄÔ¤»º´æµãÊý´óÓÚµÈÓÚ52
-#define AFT_BUF_NUM 158     //µ¥´Î´¥·¢ºÍÆÕÍ¨´¥·¢µÄ´¥·¢ºó»º´æµãÊýµÈÓÚSAMPLE_NUM-PRE_BUF_NUM
+#define SAMPLE_NUM 220      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½101ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½51ï¿½ï¿½ï¿½ãµ½ï¿½ï¿½SAMPLE_NUM-50ï¿½ï¿½ï¿½ã£¬
+#define PRE_BUF_NUM 62      //ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½52
+#define AFT_BUF_NUM 158     //ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ó»º´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SAMPLE_NUM-PRE_BUF_NUM
+
+#define _nop_() __asm nop __endasm
 
 extern uint16 VBat;
 extern uint16 Lsb;
@@ -42,29 +44,46 @@ extern uint16 WaveLengthSumNum;
 extern uint32 WaveLengthSum;
 extern int8 ScaleH_tmp;
 extern uint8 OLED_Brightness;
-extern bit OLED_BrightnessChanged;
-extern bit EC11PressAndRotate;
-extern bit DisplayUpdate;
-extern bit ClearDisplay;
-extern bit ClearWave;
-extern bit ADCRunning;
-extern bit ADCInterrupt;
-extern bit UpdateVbat;
-extern bit TriFail;
-extern bit PlotMode;
-extern bit OptionChanged;
-extern bit TriSlope;
-extern bit InSettings;
-extern bit WaveScroll;
-extern bit WaveUpdate;
-extern bit ScaleV_Auto;
-extern bit ADCComplete;
+// extern bit OLED_BrightnessChanged;
+// extern bit EC11PressAndRotate;
+// extern bit DisplayUpdate;
+// extern bit ClearDisplay;
+// extern bit ClearWave;
+// extern bit ADCRunning;
+// extern bit ADCInterrupt;
+// extern bit UpdateVbat;
+// extern bit TriFail;
+// extern bit PlotMode;
+// extern bit OptionChanged;
+// extern bit TriSlope;
+// extern bit InSettings;
+// extern bit WaveScroll;
+// extern bit WaveUpdate;
+// extern bit ScaleV_Auto;
+// extern bit ADCComplete;
+extern __bit OLED_BrightnessChanged;
+extern __bit EC11PressAndRotate;
+extern __bit DisplayUpdate;
+extern __bit ClearDisplay;
+extern __bit ClearWave;
+extern __bit ADCRunning;
+extern __bit ADCInterrupt;
+extern __bit UpdateVbat;
+extern __bit TriFail;
+extern __bit PlotMode;
+extern __bit OptionChanged;
+extern __bit TriSlope;
+extern __bit InSettings;
+extern __bit WaveScroll;
+extern __bit WaveUpdate;
+extern __bit ScaleV_Auto;
+extern __bit ADCComplete;
 extern int8 OptionInSettings;
 extern int8 OptionInChart;
 extern int8 ScaleH;
 extern int8 TriMode;
 extern uint16 ADCbuf[SAMPLE_NUM];
-extern uint8 code *PlotModeTxt[];
-extern uint8 code *TriModeTxt[];
-extern uint8 code *ScaleHTxt[];
+extern uint8 __code *PlotModeTxt[];
+extern uint8 __code *TriModeTxt[];
+extern uint8 __code *ScaleHTxt[];
 #endif

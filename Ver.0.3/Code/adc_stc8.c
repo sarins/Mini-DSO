@@ -111,7 +111,7 @@ uint16 ADCRead(uint8 chx)
 uint16 *GetBGV(void)
 {
     uint16 *BGV;
-    BGV = (uint16 code *)BGV_ADR;
+    BGV = (uint16 __code *)BGV_ADR;
     return BGV;
 }
 

@@ -71,14 +71,14 @@ void getRulerV()
 
 /* 计算波长
    Calculate wave length*/
-bit getWaveLength(uint16 triLevel, bit right_or_left)
+__bit getWaveLength(uint16 triLevel, __bit right_or_left)
 {
     int16 i;
     uint8 tri_pre = 255;
     uint8 tri_aft = 255;
     uint8 triPos_tmp;
-    bit triSlope_tmp;
-    bit triFail = 1;
+    __bit triSlope_tmp;
+    __bit triFail = 1;
     /* 查找距离屏幕中心最近的触发点
        Search the trigger poiont closest to the center of chart */
     if (right_or_left) //向右查找临时触发点 / Search right side
@@ -413,7 +413,7 @@ uint16 remap(uint16 val, uint16 rangeMax, uint16 rangeMin, uint16 rangeMaxNew, u
 
 /* 获取触发点位置
    Get Trigger Position */
-bit GetTriggerPos(uint16 d1, uint16 d2, uint16 dTrigger, bit triSlope)
+__bit GetTriggerPos(uint16 d1, uint16 d2, uint16 dTrigger, __bit triSlope)
 {
     /*  上升沿触发
         Trigger on Rising Edge  */
@@ -844,7 +844,7 @@ void PlotSettings()
 
 /* 绘制保存状态
    Draw saving status*/
-void PlotSaveStatus(bit _saveStatus)
+void PlotSaveStatus(__bit _saveStatus)
 {
     OLED_Set_Pos(64, 12);
     OLED_Overlap(0); //设置绘图模式为覆盖

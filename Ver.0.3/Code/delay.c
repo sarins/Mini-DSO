@@ -55,7 +55,7 @@ void Delay50ms() //@27.000MHz
 
 /* 编码器长按计时
    Encoder Long Press Timer */
-bit Delay800ms_Long_Press() //@27.000MHz
+__bit Delay800ms_Long_Press() //@27.000MHz
 {
     unsigned char i, j, k;
     _nop_();
@@ -83,7 +83,7 @@ bit Delay800ms_Long_Press() //@27.000MHz
 
 /* 编码器双击计时
    Encoder Double Click Timer */
-bit Delay300ms_Double_Click() //@27.000MHz
+__bit Delay300ms_Double_Click() //@27.000MHz
 {
     unsigned char i, j, k;
     EX0 = 0;
