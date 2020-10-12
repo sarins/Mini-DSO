@@ -24,19 +24,19 @@
     SOFTWARE.
 
     Note:
-    2020-04-30¸üĞÂ
-    1. ĞŞÕı²¨ĞÎ×î´óµçÑ¹ºÍ×îĞ¡µçÑ¹Öµ£¬Ö®Ç°ÏÔÊ¾µÄÊÇËùÓĞ²ÉÑùµãÖĞµÄ×î´óºÍ×îĞ¡Öµ£¬ĞŞÕıºóÏÔÊ¾ÎªÆÁÄ»·¶Î§ÄÚµÄ×î´óÖµºÍ×îĞ¡Öµ
-    2. ´¥·¢Î»ÖÃ´ÓÖ®Ç°µÄ¹Ì¶¨²¨ĞÎÖĞµã¸ÄÎªÓÃ»§×Ô¶¨Òå
-    3. Ôö¼Ó¼ÆËã²¨ĞÎÆµÂÊº¯Êı
+    2020-04-30æ›´æ–°
+    1. ä¿®æ­£æ³¢å½¢æœ€å¤§ç”µå‹å’Œæœ€å°ç”µå‹å€¼ï¼Œä¹‹å‰æ˜¾ç¤ºçš„æ˜¯æ‰€æœ‰é‡‡æ ·ç‚¹ä¸­çš„æœ€å¤§å’Œæœ€å°å€¼ï¼Œä¿®æ­£åæ˜¾ç¤ºä¸ºå±å¹•èŒƒå›´å†…çš„æœ€å¤§å€¼å’Œæœ€å°å€¼
+    2. è§¦å‘ä½ç½®ä»ä¹‹å‰çš„å›ºå®šæ³¢å½¢ä¸­ç‚¹æ”¹ä¸ºç”¨æˆ·è‡ªå®šä¹‰
+    3. å¢åŠ è®¡ç®—æ³¢å½¢é¢‘ç‡å‡½æ•°
 */
 #include "chart.h"
 #include "bmp.h"
 //#include "stdio.h"
 
-uint16 *pADCSampling;       //Ö¸ÏòADCÊµÊ±²ÉÑùµÄÖ¸Õë
-uint16 waveBuf[SAMPLE_NUM]; //¾­¹ı¼ÆËãÕûÀíºóµÄ²¨ĞÎÊı¾İ
-uint8 triPre;               //´¥·¢Î»ÖÃÇ°·½µÈÖµµã
-uint8 triAft;               //´¥·¢Î»ÖÃºó·½µÈÖµµã
+uint16 *pADCSampling;       //æŒ‡å‘ADCå®æ—¶é‡‡æ ·çš„æŒ‡é’ˆ
+uint16 waveBuf[SAMPLE_NUM]; //ç»è¿‡è®¡ç®—æ•´ç†åçš„æ³¢å½¢æ•°æ®
+uint8 triPre;               //è§¦å‘ä½ç½®å‰æ–¹ç­‰å€¼ç‚¹
+uint8 triAft;               //è§¦å‘ä½ç½®åæ–¹ç­‰å€¼ç‚¹
 uint16 plotADCMax, plotADCMin;
 
 void GetWaveData()
@@ -44,11 +44,11 @@ void GetWaveData()
     pADCSampling = GetWaveADC(ADC_DSO, ScaleH);
 }
 
-/* »ñµÃ×Ô¶¯Á¿³Ì×İÖáÉÏÏÂÏŞ
+/* è·å¾—è‡ªåŠ¨é‡ç¨‹çºµè½´ä¸Šä¸‹é™
    Calculate voltage range for Auto Range*/
 void getRulerV()
 {
-    //×Ô¶¯Á¿³Ì£¬¸ù¾İ²ÉÑùµãµÄ×î´ó×îĞ¡Öµ£¬°´500mVÀ©´ó·¶Î§È¡Õû£¬×÷Îª´¹Ö±±ê³ß·¶Î§mV
+    //è‡ªåŠ¨é‡ç¨‹ï¼Œæ ¹æ®é‡‡æ ·ç‚¹çš„æœ€å¤§æœ€å°å€¼ï¼ŒæŒ‰500mVæ‰©å¤§èŒƒå›´å–æ•´ï¼Œä½œä¸ºå‚ç›´æ ‡å°ºèŒƒå›´mV
     if (ScaleV_Auto == 1)
     {
         if (VMax / 100 % 10 >= 5)
@@ -69,7 +69,7 @@ void getRulerV()
     }
 }
 
-/* ¼ÆËã²¨³¤
+/* è®¡ç®—æ³¢é•¿
    Calculate wave length*/
 __bit getWaveLength(uint16 triLevel, __bit right_or_left)
 {
@@ -79,20 +79,20 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
     uint8 triPos_tmp;
     __bit triSlope_tmp;
     __bit triFail = 1;
-    /* ²éÕÒ¾àÀëÆÁÄ»ÖĞĞÄ×î½üµÄ´¥·¢µã
+    /* æŸ¥æ‰¾è·ç¦»å±å¹•ä¸­å¿ƒæœ€è¿‘çš„è§¦å‘ç‚¹
        Search the trigger poiont closest to the center of chart */
-    if (right_or_left) //ÏòÓÒ²éÕÒÁÙÊ±´¥·¢µã / Search right side
+    if (right_or_left) //å‘å³æŸ¥æ‰¾ä¸´æ—¶è§¦å‘ç‚¹ / Search right side
     {
         for (i = TriPos + TriPosOffset; i < SAMPLE_NUM - 2; i++)
         {
-            if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 1)) //°´ÉÏÉıÑØ²éÕÒ / Search on rising edge
+            if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 1)) //æŒ‰ä¸Šå‡æ²¿æŸ¥æ‰¾ / Search on rising edge
             {
                 triPos_tmp = i;
                 triSlope_tmp = 1;
                 triFail = 0;
                 break;
             }
-            else if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 0)) //°´ÏÂ½µÑØ²éÕÒ / Search on falling edge
+            else if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 0)) //æŒ‰ä¸‹é™æ²¿æŸ¥æ‰¾ / Search on falling edge
             {
                 triPos_tmp = i;
                 triSlope_tmp = 0;
@@ -101,18 +101,18 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
             }
         }
     }
-    else //Ïò×ó²éÕÒÁÙÊ±´¥·¢µã / Search left side
+    else //å‘å·¦æŸ¥æ‰¾ä¸´æ—¶è§¦å‘ç‚¹ / Search left side
     {
         for (i = TriPos + TriPosOffset; i > 0; i--)
         {
-            if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 1)) //°´ÉÏÉıÑØ²éÕÒ / Search on rising edge
+            if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 1)) //æŒ‰ä¸Šå‡æ²¿æŸ¥æ‰¾ / Search on rising edge
             {
                 triPos_tmp = i;
                 triSlope_tmp = 1;
                 triFail = 0;
                 break;
             }
-            else if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 0)) //°´ÏÂ½µÑØ²éÕÒ / Search on falling edge
+            else if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), triLevel, 0)) //æŒ‰ä¸‹é™æ²¿æŸ¥æ‰¾ / Search on falling edge
             {
                 triPos_tmp = i;
                 triSlope_tmp = 0;
@@ -124,9 +124,9 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
 
     if (!triFail)
     {
-        for (i = triPos_tmp; i >= 0; i--) //²éÑ¯´¥·¢Î»ÖÃ×ó²àµÄµÈÖµµã / Search equal point left side
+        for (i = triPos_tmp; i >= 0; i--) //æŸ¥è¯¢è§¦å‘ä½ç½®å·¦ä¾§çš„ç­‰å€¼ç‚¹ / Search equal point left side
         {
-            if (triSlope_tmp) //ÉÏÉı´¥·¢,²éÕÒÏÂ½µµã / Trigger on rising edge, search on falling edge
+            if (triSlope_tmp) //ä¸Šå‡è§¦å‘,æŸ¥æ‰¾ä¸‹é™ç‚¹ / Trigger on rising edge, search on falling edge
             {
                 if (*(ADCbuf + i) >= triLevel && *(ADCbuf + i + 1) <= triLevel)
                 {
@@ -134,7 +134,7 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
                     break;
                 }
             }
-            else //ÏÂ½µ´¥·¢£¬²éÕÒÉÏÉıµã / Trigger on falling edge, search on rising edge
+            else //ä¸‹é™è§¦å‘ï¼ŒæŸ¥æ‰¾ä¸Šå‡ç‚¹ / Trigger on falling edge, search on rising edge
             {
                 if (*(ADCbuf + i) <= triLevel && *(ADCbuf + i + 1) >= triLevel)
                 {
@@ -144,9 +144,9 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
             }
         }
 
-        for (i = triPos_tmp; i < SAMPLE_NUM - 1; i++) //²éÑ¯´¥·¢Î»ÖÃÓÒ²àµÄµÈÖµµã / Search equal point right side
+        for (i = triPos_tmp; i < SAMPLE_NUM - 1; i++) //æŸ¥è¯¢è§¦å‘ä½ç½®å³ä¾§çš„ç­‰å€¼ç‚¹ / Search equal point right side
         {
-            if (triSlope_tmp) //ÉÏÉı´¥·¢,²éÕÒÏÂ½µµã / Trigger on rising edge, search on falling edge
+            if (triSlope_tmp) //ä¸Šå‡è§¦å‘,æŸ¥æ‰¾ä¸‹é™ç‚¹ / Trigger on rising edge, search on falling edge
             {
                 if (*(ADCbuf + i) >= triLevel && *(ADCbuf + i + 1) <= triLevel)
                 {
@@ -154,7 +154,7 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
                     break;
                 }
             }
-            else //ÏÂ½µ´¥·¢£¬²éÕÒÉÏÉıµã / Trigger on falling edge, search on rising edge
+            else //ä¸‹é™è§¦å‘ï¼ŒæŸ¥æ‰¾ä¸Šå‡ç‚¹ / Trigger on falling edge, search on rising edge
             {
                 if (*(ADCbuf + i) <= triLevel && *(ADCbuf + i + 1) >= triLevel)
                 {
@@ -176,22 +176,22 @@ __bit getWaveLength(uint16 triLevel, __bit right_or_left)
     }
 }
 
-/* ¼ÆËã²¨ĞÎÆµÂÊ
+/* è®¡ç®—æ³¢å½¢é¢‘ç‡
    Calculate the wave frequency*/
 void getWaveFreq()
 {
-    uint16 m_num; //ÇóºÍ´ÎÊı
-    uint8 n_num;  //ÇóÆ½¾ùÖµÓÒÒÆÎ»Êı
+    uint16 m_num; //æ±‚å’Œæ¬¡æ•°
+    uint8 n_num;  //æ±‚å¹³å‡å€¼å³ç§»ä½æ•°
 
-    //ADCÍ£Ö¹²ÉÑùÊ±£¬Ã¿´Î¶¯×÷¶¼»áÏÔÊ¾²¨ĞÎÆµÂÊ£¬Òò´Ë²»ÇóÆ½¾ùÖµ
+    //ADCåœæ­¢é‡‡æ ·æ—¶ï¼Œæ¯æ¬¡åŠ¨ä½œéƒ½ä¼šæ˜¾ç¤ºæ³¢å½¢é¢‘ç‡ï¼Œå› æ­¤ä¸æ±‚å¹³å‡å€¼
     if (!ADCRunning)
     {
         WaveLengthSumNum = 0;
         WaveLengthSum = 0;
     }
 
-    //×Ô¶¯Ä£Ê½ÏÂÎªÁËÈÃÆµÂÊ²»Æµ·±±ä¶¯£¬È¡Æ½¾ùÖµ£¬´óÓÚµÈÓÚ100msÇø¼ä²»È¡Æ½¾ùÖµ£¬Ò»¸öÔ­ÒòÊÇ100ms²¨ĞÎ±ä»¯Âı£¬ËùÒÔÆµÂÊÌø¶¯²»Æµ·±£¬
-    //ÁíÒ»·½ÃæÔ½³¤µÄÊ±¼äÇø¼äÈ¡Æ½¾ùÖµµÄÑÓ³ÙÔ½¸ß£¬Ó°ÏìÊ¹ÓÃÌåÑé
+    //è‡ªåŠ¨æ¨¡å¼ä¸‹ä¸ºäº†è®©é¢‘ç‡ä¸é¢‘ç¹å˜åŠ¨ï¼Œå–å¹³å‡å€¼ï¼Œå¤§äºç­‰äº100msåŒºé—´ä¸å–å¹³å‡å€¼ï¼Œä¸€ä¸ªåŸå› æ˜¯100msæ³¢å½¢å˜åŒ–æ…¢ï¼Œæ‰€ä»¥é¢‘ç‡è·³åŠ¨ä¸é¢‘ç¹ï¼Œ
+    //å¦ä¸€æ–¹é¢è¶Šé•¿çš„æ—¶é—´åŒºé—´å–å¹³å‡å€¼çš„å»¶è¿Ÿè¶Šé«˜ï¼Œå½±å“ä½¿ç”¨ä½“éªŒ
     else if (TriMode == 0 && ScaleH > 2)
     {
         switch (ScaleH)
@@ -214,15 +214,15 @@ void getWaveFreq()
 
         WaveLengthSum += WaveLength;
 
-        //´ïµ½ÇóºÍ´ÎÊıºó
+        //è¾¾åˆ°æ±‚å’Œæ¬¡æ•°å
         if (++WaveLengthSumNum >= m_num)
         {
-            WaveLength = WaveLengthSum >> n_num; //Çó²¨³¤Æ½¾ùÖµ
-            WaveLengthSumNum = 0;                //ÇåÁã²¨³¤ÇóºÍ´ÎÊı
-            WaveLengthSum = 0;                   //ÇåÁã²¨³¤×ÜºÍ
+            WaveLength = WaveLengthSum >> n_num; //æ±‚æ³¢é•¿å¹³å‡å€¼
+            WaveLengthSumNum = 0;                //æ¸…é›¶æ³¢é•¿æ±‚å’Œæ¬¡æ•°
+            WaveLengthSum = 0;                   //æ¸…é›¶æ³¢é•¿æ€»å’Œ
         }
 
-        //Ã»´ïµ½ÇóºÍ´ÎÊı£¬Ôò·µ»Ø£¬WaveFreq±£³Ö²»±ä
+        //æ²¡è¾¾åˆ°æ±‚å’Œæ¬¡æ•°ï¼Œåˆ™è¿”å›ï¼ŒWaveFreqä¿æŒä¸å˜
         else
             return;
     }
@@ -279,7 +279,7 @@ void getWaveFreq()
     }
 }
 
-/* ½«mv×ª»»ÎªADC
+/* å°†mvè½¬æ¢ä¸ºADC
    Convert voltage in mV to ADC*/
 uint16 Convert_mv_ADC(uint16 mv, uint16 *BGV, uint16 ADCbg, uint16 lsb)
 {
@@ -288,7 +288,7 @@ uint16 Convert_mv_ADC(uint16 mv, uint16 *BGV, uint16 ADCbg, uint16 lsb)
     return ADC;
 }
 
-/* ½«mv×ª»»ÎªADC
+/* å°†mvè½¬æ¢ä¸ºADC
    Convert ADC to voltage in mV */
 uint16 c_ADC_mv(uint16 ADC, uint16 *BGV, uint16 BGADC, uint16 lsb)
 {
@@ -297,7 +297,7 @@ uint16 c_ADC_mv(uint16 ADC, uint16 *BGV, uint16 BGADC, uint16 lsb)
     return mv;
 }
 
-/* ½«uint16¸ñÊ½µÄmV×ª»¯Îª×Ö·ûĞÍV
+/* å°†uint16æ ¼å¼çš„mVè½¬åŒ–ä¸ºå­—ç¬¦å‹V
    Convert voltage in mV to string*/
 uint8 *c_mv_V(uint16 v)
 {
@@ -323,7 +323,7 @@ uint8 *c_mv_V(uint16 v)
     return s;
 }
 
-/* ×ª»»²¨ĞÎÆµÂÊÎª×Ö·û
+/* è½¬æ¢æ³¢å½¢é¢‘ç‡ä¸ºå­—ç¬¦
    Convert frequency to string */
 uint8 *c_WaveFreq_Str()
 {
@@ -398,7 +398,7 @@ uint8 *c_WaveFreq_Str()
     return s;
 }
 
-/* ½«²ÉÑùÖµµÄÓ³Éäµ½ÆÁÄ»µÄÏÔÊ¾·¶Î§£¬²¢·´×ª
+/* å°†é‡‡æ ·å€¼çš„æ˜ å°„åˆ°å±å¹•çš„æ˜¾ç¤ºèŒƒå›´ï¼Œå¹¶åè½¬
    Remap sampling data to display range and inverse */
 uint16 remap(uint16 val, uint16 rangeMax, uint16 rangeMin, uint16 rangeMaxNew, uint16 rangeMinNew)
 {
@@ -411,11 +411,11 @@ uint16 remap(uint16 val, uint16 rangeMax, uint16 rangeMin, uint16 rangeMaxNew, u
     return val;
 }
 
-/* »ñÈ¡´¥·¢µãÎ»ÖÃ
+/* è·å–è§¦å‘ç‚¹ä½ç½®
    Get Trigger Position */
 __bit GetTriggerPos(uint16 d1, uint16 d2, uint16 dTrigger, __bit triSlope)
 {
-    /*  ÉÏÉıÑØ´¥·¢
+    /*  ä¸Šå‡æ²¿è§¦å‘
         Trigger on Rising Edge  */
     if (triSlope)
     {
@@ -425,7 +425,7 @@ __bit GetTriggerPos(uint16 d1, uint16 d2, uint16 dTrigger, __bit triSlope)
         }
     }
 
-    /*  ÏÂ½µÑØ´¥·¢
+    /*  ä¸‹é™æ²¿è§¦å‘
         Trigger on Falling Edge */
     else
     {
@@ -438,7 +438,7 @@ __bit GetTriggerPos(uint16 d1, uint16 d2, uint16 dTrigger, __bit triSlope)
     return 0;
 }
 
-/* ·ÖÎö²ÉÑùÊı¾İ
+/* åˆ†æé‡‡æ ·æ•°æ®
    Analyse sampling date */
 void AnalyseData()
 {
@@ -450,31 +450,31 @@ void AnalyseData()
     uint16 plotADCMid = 0;
     if (ADCComplete)
     {
-        ScaleH_tmp = ScaleH; //¼ÇÂ¼Íê³É²ÉÑùµÄÊ±¼äÇø¼ä£¬ÓÉÓÚ²ÉÑùµãµÄÊıÁ¿½ÏÉÙ£¬Òò´Ë²»Ö§³ÖÊµÊ±¸ù¾İÊ±¼äÇø¼äËõ·Å²¨ĞÎ£¬Ê±¼äÇø¼ä¸Ä±äÔòÇå¿Õ²¨ĞÎ
-        //½«²ÉÑùµã¸´ÖÆµ½ÁíÒ»¸öÊı×é£¬±ÜÃâ²ÉÑùÖĞ¶ÏÔì³ÉÊı¾İ»ìÂÒ
-        //Èô²ÉÑù±»ÖĞ¶Ï£¬ÔòÊ¹ÓÃ»º´æÖĞ¾É²ÉÑùµãÏÔÊ¾²¨ĞÎ
+        ScaleH_tmp = ScaleH; //è®°å½•å®Œæˆé‡‡æ ·çš„æ—¶é—´åŒºé—´ï¼Œç”±äºé‡‡æ ·ç‚¹çš„æ•°é‡è¾ƒå°‘ï¼Œå› æ­¤ä¸æ”¯æŒå®æ—¶æ ¹æ®æ—¶é—´åŒºé—´ç¼©æ”¾æ³¢å½¢ï¼Œæ—¶é—´åŒºé—´æ”¹å˜åˆ™æ¸…ç©ºæ³¢å½¢
+        //å°†é‡‡æ ·ç‚¹å¤åˆ¶åˆ°å¦ä¸€ä¸ªæ•°ç»„ï¼Œé¿å…é‡‡æ ·ä¸­æ–­é€ æˆæ•°æ®æ··ä¹±
+        //è‹¥é‡‡æ ·è¢«ä¸­æ–­ï¼Œåˆ™ä½¿ç”¨ç¼“å­˜ä¸­æ—§é‡‡æ ·ç‚¹æ˜¾ç¤ºæ³¢å½¢
         for (i = 0; i < SAMPLE_NUM; i++)
         {
             *(ADCbuf + i) = *(pADCSampling + i);
         }
 
-        //¼ÆËã´¥·¢µãÎ»ÖÃ
-        //ADC²ÉÑùÍ£Ö¹Ê±£¬TriPos²»±ä£¬ËùÒÔ²»½øĞĞÏÂÁĞ¼ÆËã
+        //è®¡ç®—è§¦å‘ç‚¹ä½ç½®
+        //ADCé‡‡æ ·åœæ­¢æ—¶ï¼ŒTriPosä¸å˜ï¼Œæ‰€ä»¥ä¸è¿›è¡Œä¸‹åˆ—è®¡ç®—
         TriPos = SAMPLE_NUM / 2;
-        TriFail = 1; //ÖÃÎ»´¥·¢Ê§°Ü±êÖ¾
+        TriFail = 1; //ç½®ä½è§¦å‘å¤±è´¥æ ‡å¿—
         for (i = ((CHART_H_MAX - CHART_H_MIN) >> 1); i < SAMPLE_NUM - ((CHART_H_MAX - CHART_H_MIN) >> 1); i++)
         {
             if (GetTriggerPos(*(ADCbuf + i), *(ADCbuf + i + 1), TriggerADC, TriSlope))
             {
                 TriPos = i;
-                TriFail = 0; //ÇåÁã´¥·¢Ê§°Ü±êÖ¾
+                TriFail = 0; //æ¸…é›¶è§¦å‘å¤±è´¥æ ‡å¿—
                 break;
             }
         }
         TriPosOffset = 0;
     }
 
-    /*  »ñÈ¡ÆÁÄ»ÏÔÊ¾²¨ĞÎµÄ×î´óºÍ×îĞ¡Öµ
+    /*  è·å–å±å¹•æ˜¾ç¤ºæ³¢å½¢çš„æœ€å¤§å’Œæœ€å°å€¼
         Get the MAX and MIN value of waveform on display*/
     for (i = 0; i <= 100; i++)
     {
@@ -485,22 +485,22 @@ void AnalyseData()
             adcMin = tmp;
     }
 
-    //½«²ÉÑùµãµÄ×î´ó×îĞ¡²ÉÑùÖµ×ª»»³ÉµçÑ¹ÖµmV
+    //å°†é‡‡æ ·ç‚¹çš„æœ€å¤§æœ€å°é‡‡æ ·å€¼è½¬æ¢æˆç”µå‹å€¼mV
     VMax = c_ADC_mv(adcMax, BGV, ADCbg, Lsb);
     VMin = c_ADC_mv(adcMin, BGV, ADCbg, Lsb);
 
-    //»ñµÃ´¹Ö±±ê³ßµÄÉÏÏÂÏŞ
+    //è·å¾—å‚ç›´æ ‡å°ºçš„ä¸Šä¸‹é™
     getRulerV();
 
-    //ÓÃ´¹Ö±±ê³ßmV·¶Î§·´Çó³öADCÖµµÄ·¶Î§×÷ÎªÍ¼±íµÄÏÔÊ¾ÉÏÏÂÏŞ
+    //ç”¨å‚ç›´æ ‡å°ºmVèŒƒå›´åæ±‚å‡ºADCå€¼çš„èŒƒå›´ä½œä¸ºå›¾è¡¨çš„æ˜¾ç¤ºä¸Šä¸‹é™
     plotADCMax = Convert_mv_ADC(RulerVMax, BGV, ADCbg, Lsb);
     plotADCMin = Convert_mv_ADC(RulerVMin, BGV, ADCbg, Lsb);
 
-    //¼ÆËã²¨ĞÎµÄÆµÂÊ
-    //Èç¹ûµ±Ç°µÄÊ±¼äÇø¼äºÍ²ÉÑùÊı¾İµÄÊ±¼ä¼ä¸ôÒ»ÖÂÔò½øĞĞÆµÂÊ¼ÆËã
-    //ÓÉÓÚSTC8A8KÔÚ¸ßÆµ²ÉÑùÊ±£¬ADCÖµ¾­³£ÄªÃûÆäÃîµØÌø±äµ½ÂúÁ¿³Ì4095£¬×ÉÑ¯STC¹¤³ÌÊ¦ÎŞ¹û
-    //Îª±ÜÃâADC²ÉÑù³ö´íÊ±ÆµÂÊÌø±äÀ÷º¦£¬¼ÆËã²¨³¤Ê±Ê¹ÓÃµçÑ¹±ê³ßµÄÖĞµãºÍ²¨·ùÖĞµãµÄ½ÏĞ¡Öµ
-    //Èç¹ûÓöµ½ÆµÂÊÌø±äÎŞ·¨¶ÁÈ¡£¬½«×Ô¶¯Á¿³ÌÇĞ»»ÖÁºÏÊÊµÄÊÖ¶¯Á¿³Ì¼´¿É
+    //è®¡ç®—æ³¢å½¢çš„é¢‘ç‡
+    //å¦‚æœå½“å‰çš„æ—¶é—´åŒºé—´å’Œé‡‡æ ·æ•°æ®çš„æ—¶é—´é—´éš”ä¸€è‡´åˆ™è¿›è¡Œé¢‘ç‡è®¡ç®—
+    //ç”±äºSTC8A8Kåœ¨é«˜é¢‘é‡‡æ ·æ—¶ï¼ŒADCå€¼ç»å¸¸è«åå…¶å¦™åœ°è·³å˜åˆ°æ»¡é‡ç¨‹4095ï¼Œå’¨è¯¢STCå·¥ç¨‹å¸ˆæ— æœ
+    //ä¸ºé¿å…ADCé‡‡æ ·å‡ºé”™æ—¶é¢‘ç‡è·³å˜å‰å®³ï¼Œè®¡ç®—æ³¢é•¿æ—¶ä½¿ç”¨ç”µå‹æ ‡å°ºçš„ä¸­ç‚¹å’Œæ³¢å¹…ä¸­ç‚¹çš„è¾ƒå°å€¼
+    //å¦‚æœé‡åˆ°é¢‘ç‡è·³å˜æ— æ³•è¯»å–ï¼Œå°†è‡ªåŠ¨é‡ç¨‹åˆ‡æ¢è‡³åˆé€‚çš„æ‰‹åŠ¨é‡ç¨‹å³å¯
     adcMid = (adcMax + adcMin) >> 1;
     plotADCMid = (plotADCMax + plotADCMin) >> 1;
     if (getWaveLength(adcMid < plotADCMid ? adcMid : plotADCMid, 1) || getWaveLength(adcMid < plotADCMid ? adcMid : plotADCMid, 0))
@@ -512,14 +512,14 @@ void AnalyseData()
         WaveFreq = 0;
     }
 
-    //Ó³Éä²ÉÑùÖµÖÁÆÁÄ»µÄÏÔÊ¾·¶Î§
+    //æ˜ å°„é‡‡æ ·å€¼è‡³å±å¹•çš„æ˜¾ç¤ºèŒƒå›´
     for (i = 0; i < SAMPLE_NUM; i++)
     {
         waveBuf[i] = remap(*(ADCbuf + i), plotADCMax, plotADCMin, CHART_V_MAX, CHART_V_MIN);
     }
 }
 
-/* »æÖÆÖ÷½çÃæ
+/* ç»˜åˆ¶ä¸»ç•Œé¢
    Draw main interface */
 void PlotChart(void)
 {
@@ -531,9 +531,9 @@ void PlotChart(void)
         ClearDisplay = 0;
         OLED_Clear();
 
-        /* Í¼±í±ß¿ò
-           ²¨ĞÎºáÏò»æÍ¼Çø101¸ñ,26~126
-           ²¨ĞÎ×İÏò»æÍ¼Çø45¸ñ,8~52
+        /* å›¾è¡¨è¾¹æ¡†
+           æ³¢å½¢æ¨ªå‘ç»˜å›¾åŒº101æ ¼,26~126
+           æ³¢å½¢çºµå‘ç»˜å›¾åŒº45æ ¼,8~52
            Frame of chart 45x101*/
         OLED_DrawHLine(CHART_H_MIN, CHART_V_MIN, 4);
         OLED_DrawHLine(CHART_H_MIN, CHART_V_MAX, 4);
@@ -548,7 +548,7 @@ void PlotChart(void)
         OLED_DrawVLine(CHART_H_MIN - 1, CHART_V_MIN, CHART_V_MAX - CHART_V_MIN + 1);
         OLED_DrawVLine(CHART_H_MAX + 1, CHART_V_MIN, CHART_V_MAX - CHART_V_MIN + 1);
 
-        /* Í¼±íĞéÏßÍø¸ñ
+        /* å›¾è¡¨è™šçº¿ç½‘æ ¼
            Grid of chart */
         for (i = 0; i < 15; i++)
         {
@@ -561,14 +561,14 @@ void PlotChart(void)
             OLED_DrawVLine(CHART_H_MIN + 75, CHART_V_MIN + 1 + i * 8, 3);
         }
 
-        /* ²¨ĞÎÎ»ÖÃ±ê³ß
+        /* æ³¢å½¢ä½ç½®æ ‡å°º
            Ruler for waveform position*/
         OLED_DrawHLine(0, 62, 25);
         OLED_DrawVLine(0, 60, 3);
         OLED_DrawVLine(24, 60, 3);
         OLED_DrawVLine((TriPos + TriPosOffset - 50) * 24 / 119, 58, 4);
 
-        /* ²¨ĞÎµçÑ¹·¶Î§
+        /* æ³¢å½¢ç”µå‹èŒƒå›´
            Voltage range of waveform*/
         OLED_Set_Pos(26, 56);
         s = c_mv_V(VMin);
@@ -579,9 +579,9 @@ void PlotChart(void)
         OLED_DrawString("V");
     }
 
-    OLED_Overlap(0); //ÉèÖÃ»æÍ¼Ä£Ê½Îª¸²¸Ç
+    OLED_Overlap(0); //è®¾ç½®ç»˜å›¾æ¨¡å¼ä¸ºè¦†ç›–
 
-    /* ÆµÂÊ
+    /* é¢‘ç‡
        Frequency */
     OLED_Set_Pos(92, 0);
     OLED_DrawString("      ");
@@ -590,7 +590,7 @@ void PlotChart(void)
     OLED_DrawString(s);
     OLED_DrawString("Hz");
 
-    /* ×Ô¶¯Á¿³Ì±êÖ¾
+    /* è‡ªåŠ¨é‡ç¨‹æ ‡å¿—
        Flag for Auto Range*/
     if (ScaleV_Auto == 1)
     {
@@ -603,7 +603,7 @@ void PlotChart(void)
         OLED_DrawString("    ");
     }
 
-    /* ´¥·¢Öµ
+    /* è§¦å‘å€¼
        Trigger Level */
     OLED_Set_Pos(33, 0);
     if (OptionInChart == 2 && !WaveScroll)
@@ -623,7 +623,7 @@ void PlotChart(void)
     OLED_DrawString("V");
     OLED_Reverse(0);
 
-    /* ´¥·¢·½Ïò±êÖ¾
+    /* è§¦å‘æ–¹å‘æ ‡å¿—
        Trigger Slope */
     if (OptionInChart == 3 && !WaveScroll)
     {
@@ -640,15 +640,15 @@ void PlotChart(void)
     }
     if (TriSlope)
     {
-        OLED_DrawChar(72, 0, 123); //123ÉÏ¼ıÍ·£¬ÉÏÉıÑØ´¥·¢
+        OLED_DrawChar(72, 0, 123); //123ä¸Šç®­å¤´ï¼Œä¸Šå‡æ²¿è§¦å‘
     }
     else
     {
-        OLED_DrawChar(72, 0, 124); //124ÏÂ¼ıÍ·£¬ÏÂ½µÑØ´¥·¢
+        OLED_DrawChar(72, 0, 124); //124ä¸‹ç®­å¤´ï¼Œä¸‹é™æ²¿è§¦å‘
     }
     OLED_Reverse(0);
 
-    /* ´¥·¢·½Ê½±êÖ¾
+    /* è§¦å‘æ–¹å¼æ ‡å¿—
        Trigger Mode */
     if (OptionInChart == 4 && !WaveScroll)
     {
@@ -676,7 +676,7 @@ void PlotChart(void)
     }
     OLED_Reverse(0);
 
-    /* ´¥·¢Ê§°Ü±êÖ¾
+    /* è§¦å‘å¤±è´¥æ ‡å¿—
        Flag for Trigger Fail*/
     if (TriFail)
     {
@@ -684,7 +684,7 @@ void PlotChart(void)
         OLED_DrawString("Fail");
     }
 
-    //»æÖÆÔËĞĞ/Í£Ö¹±êÖ¾
+    //ç»˜åˆ¶è¿è¡Œ/åœæ­¢æ ‡å¿—
     //    if (TriS && ADCRuning)
     //    {
     //        OLED_Set_Pos(0, 16);
@@ -701,7 +701,7 @@ void PlotChart(void)
         OLED_DrawString("Stop");
     }
 
-    /* ºáÖáÊ±¼äÇø¼ä
+    /* æ¨ªè½´æ—¶é—´åŒºé—´
        Seconds per division */
     OLED_Set_Pos(97, 56);
     OLED_DrawString("     ");
@@ -713,7 +713,7 @@ void PlotChart(void)
     OLED_DrawString(ScaleHTxt[ScaleH]);
     OLED_Reverse(0);
 
-    /* ×İÖáµçÑ¹Çø¼ä
+    /* çºµè½´ç”µå‹åŒºé—´
        Ruler for Voltage */
     OLED_Set_Pos(0, 8);
     OLED_DrawString("    ");
@@ -729,10 +729,10 @@ void PlotChart(void)
     OLED_Set_Pos(0, 46);
     OLED_DrawString(s);
 
-    OLED_Overlap(1); //»Ö¸´»æÍ¼Ä£Ê½Îªµş¼Ó
+    OLED_Overlap(1); //æ¢å¤ç»˜å›¾æ¨¡å¼ä¸ºå åŠ 
 }
 
-/* »æÖÆ²¨ĞÎ
+/* ç»˜åˆ¶æ³¢å½¢
    Draw waveform*/
 void PlotWave(void)
 {
@@ -759,7 +759,7 @@ void PlotWave(void)
     }
 }
 
-/* »æÖÆÉèÖÃ½çÃæ
+/* ç»˜åˆ¶è®¾ç½®ç•Œé¢
    Draw settings */
 void PlotSettings()
 {
@@ -788,7 +788,7 @@ void PlotSettings()
 
     OLED_Overlap(0);
 
-    /* Ñ¡Ïî
+    /* é€‰é¡¹
        Options */
     /* DrawMode */
     OLED_Set_Pos(0, 0);
@@ -815,7 +815,7 @@ void PlotSettings()
     OLED_DrawString(c_mv_V(VBat));
     OLED_DrawString("V");
 
-    /* Ñ¡Ïî±êÖ¾£¬125¶ÔÓ¦×ó¼ıÍ·
+    /* é€‰é¡¹æ ‡å¿—ï¼Œ125å¯¹åº”å·¦ç®­å¤´
        Option indicator, 125 is Left arrow */
     /* PlotMode */
     if (OptionInSettings == 0)
@@ -842,12 +842,12 @@ void PlotSettings()
     OLED_Overlap(1);
 }
 
-/* »æÖÆ±£´æ×´Ì¬
+/* ç»˜åˆ¶ä¿å­˜çŠ¶æ€
    Draw saving status*/
 void PlotSaveStatus(__bit _saveStatus)
 {
     OLED_Set_Pos(64, 12);
-    OLED_Overlap(0); //ÉèÖÃ»æÍ¼Ä£Ê½Îª¸²¸Ç
+    OLED_Overlap(0); //è®¾ç½®ç»˜å›¾æ¨¡å¼ä¸ºè¦†ç›–
     if (_saveStatus)
     {
         OLED_DrawString("Save Succ.");
@@ -856,5 +856,5 @@ void PlotSaveStatus(__bit _saveStatus)
     {
         OLED_DrawString("Save Fail!");
     }
-    OLED_Overlap(1); //ÉèÖÃ»æÍ¼Ä£Ê½Îª¸²¸Ç
+    OLED_Overlap(1); //è®¾ç½®ç»˜å›¾æ¨¡å¼ä¸ºè¦†ç›–
 }

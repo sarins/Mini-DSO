@@ -22,7 +22,7 @@
 #define uint32 unsigned long int
 #endif
 
-/* ÆÁÄ»ÉÏ²¨ĞÎÏÔÊ¾ÇøÓò
+/* å±å¹•ä¸Šæ³¢å½¢æ˜¾ç¤ºåŒºåŸŸ
    Region for waveform on display*/
 #define CHART_H_MAX 126 
 #define CHART_H_MIN 26

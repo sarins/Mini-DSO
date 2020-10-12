@@ -84,27 +84,27 @@ void ADCInit(uint8 scale_h)
         break;
     }
 
-    ADCCFG = RESFMT | ADC_SPEED; //����Ҷ��룬���� ADC ʱ��Ϊϵͳʱ��/2/16/16
-    ADC_CONTR = ADC_POWER;       //ʹ�� ADC ģ��
-    Delay5ms();                  //ADC�ϵ粢��ʱ
+    ADCCFG = RESFMT | ADC_SPEED; //结果右对齐，设置 ADC 时钟为系统时钟/2/16/16
+    ADC_CONTR = ADC_POWER;       //使能 ADC 模块
+    Delay5ms();                  //ADC上电并延时
 }
 
 uint16 ADCRead(uint8 chx)
 {
     uint16 res;
-    ADC_RES = 0;            //�������Ĵ���
-    ADC_RESL = 0;           //�������Ĵ���
-    ADC_CONTR &= 0xF0;      //ѡ��ADC����ͨ��
-    ADC_CONTR |= chx;       //ѡ��ADC����ͨ��
-    ADC_CONTR |= ADC_START; //���� AD ת��
+    ADC_RES = 0;            //清除结果寄存器
+    ADC_RESL = 0;           //清除结果寄存器
+    ADC_CONTR &= 0xF0;      //选择ADC输入通道
+    ADC_CONTR |= chx;       //选择ADC输入通道
+    ADC_CONTR |= ADC_START; //启动 AD 转换
     _nop_();
     _nop_();
 
     while (!(ADC_CONTR & ADC_FLAG))
-        ; //��ѯ ADC ��ɱ�־
+        ; //查询 ADC 完成标志
 
-    ADC_CONTR &= ~ADC_FLAG;          //����ɱ�־
-    res = (ADC_RES << 8) | ADC_RESL; //��ȡ ADC ���
+    ADC_CONTR &= ~ADC_FLAG;          //清完成标志
+    res = (ADC_RES << 8) | ADC_RESL; //读取 ADC 结果
     return res;
 }
 
@@ -120,10 +120,10 @@ uint16 GetADC_CHX(uint8 chx)
     uint16 ADCx;
     uint8 i;
 
-    ADCInit(0); //ADC ��ʼ��
+    ADCInit(0); //ADC 初始化
 
-    //ͨ��ADC��chxͨ����ȡBandgap��ѹ��ADC����ֵ
-    ADCRead(chx); //ǰ�������ݶ���
+    //通过ADC的chx通道读取Bandgap电压的ADC测量值
+    ADCRead(chx); //前两个数据丢弃
     ADCRead(chx);
     ADCx = 0;
 
@@ -132,7 +132,7 @@ uint16 GetADC_CHX(uint8 chx)
         ADCx += ADCRead(chx);
     }
 
-    ADCx >>= 4; //ȡƽ��ֵ
+    ADCx >>= 4; //取平均值
     return ADCx;
 }
 
@@ -143,22 +143,22 @@ uint16 GetVoltage(uint8 chx, uint16 lsb)
     uint16 ADCx;
     uint16 Vx;
 
-    ADCInit(0); //ADC ��ʼ��
+    ADCInit(0); //ADC 初始化
 
-    //ͨ��ADC�ĵ�16ͨ����ȡBandgap��ѹ��ADCƽ��ֵ
+    //通过ADC的第16通道读取Bandgap电压的ADC平均值
     ADCbg = GetADC_CHX(ADC_CHS_BG);
 
-    //ͨ��ADC��chxͨ����ȡ�ⲿ�����ѹ��ADCƽ��ֵ
+    //通过ADC的chx通道读取外部输入电压的ADC平均值
     ADCx = GetADC_CHX(chx);
 
-    //ͨ����ʽ�����ⲿ�����ʵ�ʵ�ѹֵ
+    //通过公式计算外部输入的实际电压值
     BGV = GetBGV();
     Vx = (uint32)*BGV * ADCx * lsb / ADCbg / 100;
     return Vx;
 }
 
 //	ADCRead(chx) Timing:500ms, 200ms, 100ms, 50ms, 20ms, 10ms, 5ms, 2ms, 1ms, 500us, 200us, 100us
-//	��Ļ�ĺ���4��ÿ�����һ��ʱ�䷶Χ��ÿ��25��������
+//	屏幕的横向共4格，每格代表一个时间范围，每格25个采样点
 //  24MHz
 //	ADC_SPEED_512 28us
 //	ADC_SPEED_480 26.2us
@@ -238,7 +238,7 @@ void switch_Dealy(uint8 scale_h)
 
         //200us ADC_SPEED_32
     case 10:
-        /* ΢������ʱ����
+        /* 微调采样时间间隔
            fine tuning the delay */
         _nop_();
         //_nop_();
@@ -255,27 +255,27 @@ uint16 *GetWaveADC(uint8 chx, uint8 scale_h)
 {
     uint8 i, j;
     static uint16 ADCSampling[SAMPLE_NUM];
-    uint16 ADCPreSampling[PRE_BUF_NUM + 1]; //���δ���Ԥ���棬��Ч������PRE_BUF_NUM��������ĵ�һ��λ�����ڸ������һ��λ�õ�ֵ�����ѭ������
+    uint16 ADCPreSampling[PRE_BUF_NUM + 1]; //单次触发预缓存，有效采样点PRE_BUF_NUM个，多出的第一个位置用于复制最后一个位置的值，组成循环缓存
 
-    ADCComplete = 0; //���������ɱ�־
+    ADCComplete = 0; //清零采样完成标志
     if (ADCInterrupt)
         return ADCSampling;
     memset(ADCSampling, 0x00, SAMPLE_NUM * 2);
     memset(ADCPreSampling, 0x00, (PRE_BUF_NUM + 1) * 2);
-    //BGV = GetBGV(); //��ȡ�ο���ѹֵ
-    ADCbg = GetADC_CHX(ADC_CHS_BG);                         //��ȡ�ο�ADCֵ
-    TriggerADC = Convert_mv_ADC(TriLevel, BGV, ADCbg, Lsb); //���û��趨�ĳ�����ѹֵת��ΪADCֵ
+    //BGV = GetBGV(); //获取参考电压值
+    ADCbg = GetADC_CHX(ADC_CHS_BG);                         //获取参考ADC值
+    TriggerADC = Convert_mv_ADC(TriLevel, BGV, ADCbg, Lsb); //将用户设定的出发电压值转换为ADC值
 
-    //���δ��ڲ�A/Dת��ģ���Դ�����ʵ���ʱ�����ڲ�ģ���Դ�ȶ���������A/Dת��
+    //初次打开内部A/D转换模拟电源，需适当延时，等内部模拟电源稳定后，再启动A/D转换
     ADCInit(scale_h);
-    //ͨ��ADC�ĵ�xͨ����ȡ�ⲿ�����ѹ��ADC����ֵ
-    ADCRead(chx); //ǰ�������ݶ���
+    //通过ADC的第x通道读取外部输入电压的ADC测量值
+    ADCRead(chx); //前两个数据丢弃
     ADCRead(chx);
 
-    //ʱ����100us��֧�ֵ��δ��������������в����ж���Ĵ������ﲻ��4usÿ�ε��ٶȣ����Ե�����������
+    //时间间隔100us不支持单次触发，采样过程中不能有多余的代码否则达不到4us每次的速度，所以单独分立出来
     if (scale_h == 11) //100 us
     {
-        P_Ready = 1; //��ʼ����������ָʾ��
+        P_Ready = 1; //开始采样，点亮指示灯
         for (i = 0; i < SAMPLE_NUM; i++)
         {
             if (ADCInterrupt)
@@ -285,45 +285,45 @@ uint16 *GetWaveADC(uint8 chx, uint8 scale_h)
             P15 = ~P15;
 #endif
         }
-        P_Ready = 0; //����������Ϩ��ָʾ��
+        P_Ready = 0; //结束采样，熄灭指示灯
     }
 
-    /* ���δ�������ͨ����
+    /* 单次触发或普通触发
        Single or Normal Trigger Mode */
     else if (TriMode)
     {
-        P_Ready = 0;                       //Ԥ���棬Ϩ��ָʾ�ƣ����Ԥ����ǰ��Ҫ���봥���źţ����������
-        for (j = 1; j <= PRE_BUF_NUM; j++) //Ԥ����PRE_BUF_NUM�������㣬Ԥ����ĵ�һ��λ�ñ��������ڴ洢��Ԥ�������һ��λ����ͬ��ֵ����ɻ��λ���
+        P_Ready = 0;                       //预缓存，熄灭指示灯，完成预缓存前不要输入触发信号，会错过触发
+        for (j = 1; j <= PRE_BUF_NUM; j++) //预缓存PRE_BUF_NUM个采样点，预缓存的第一个位置保留，用于存储和预缓存最后一个位置相同的值，组成环形缓存
         {
             if (ADCInterrupt)
                 return ADCSampling;
 
-            Delay3us();            //����ѭ��������ʱ����������������3us
-            switch_Dealy(scale_h); //������ʱ
+            Delay3us();            //修正循环采样的时间间隔比连续采样慢3us
+            switch_Dealy(scale_h); //采样延时
             ADCPreSampling[j] = ADCRead(chx);
 #ifdef DEBUG
             P15 = ~P15;
 #endif
         }
-        P_Ready = 1; //Ԥ�������������ָʾ�ƣ������봥���ź�
+        P_Ready = 1; //预缓存结束，点亮指示灯，可输入触发信号
 
-        //ѭ�����津��ǰ��PRE_BUF_NUM�������㣬�����������Ƿ����㴥������
+        //循环缓存触发前的PRE_BUF_NUM个采样点，并检测采样点是否满足触发条件
         while (1)
         {
             if (ADCInterrupt)
                 return ADCSampling;
 
-            //Ԥ�����������1���������һ������ֵ���Ƶ���һ��λ��
+            //预缓存溢出则置1，并把最后一个采样值复制到第一个位置
             if (j > PRE_BUF_NUM)
             {
                 j = 1;
                 ADCPreSampling[0] = ADCPreSampling[PRE_BUF_NUM];
             }
-            switch_Dealy(scale_h); //������ʱ
+            switch_Dealy(scale_h); //采样延时
             ADCPreSampling[j] = ADCRead(chx);
-            if (GetTriggerPos(ADCPreSampling[j - 1], ADCPreSampling[j], TriggerADC, TriSlope)) //�Ƿ����㴥������
+            if (GetTriggerPos(ADCPreSampling[j - 1], ADCPreSampling[j], TriggerADC, TriSlope)) //是否满足触发条件
             {
-                P_Ready = 0; //�����ɹ�������whileѭ����Ϩ��ָʾ��
+                P_Ready = 0; //触发成功，跳出while循环，熄灭指示灯
                 break;
             }
             j++;
@@ -332,51 +332,51 @@ uint16 *GetWaveADC(uint8 chx, uint8 scale_h)
 #endif
         }
 
-        //��������AFT_BUF_NUM��������
+        //继续采样AFT_BUF_NUM个采样点
         for (i = 0; i < AFT_BUF_NUM; i++)
         {
             if (ADCInterrupt)
                 return ADCSampling;
 
-            Delay3us();            //����ѭ��������ʱ����������������3us
-            switch_Dealy(scale_h); //������ʱ
+            Delay3us();            //修正循环采样的时间间隔比连续采样慢3us
+            switch_Dealy(scale_h); //采样延时
             ADCSampling[i + PRE_BUF_NUM] = ADCRead(chx);
 #ifdef DEBUG
             P15 = ~P15;
 #endif
         }
 
-        //��ǰPRE_BUF_NUM���ͺ�PRE_BUF_NUM����������ϳ���������
-        for (i = 0; i < PRE_BUF_NUM; i++) //Ԥ�����е�һ�������һ������ֵ��ȣ������һ��ֵ����ʣ��PRE_BUF_NUM-1�������㰴����˳��������ΪADCSampling��ǰPRE_BUF_NUM-1��������
+        //将前PRE_BUF_NUM个和后PRE_BUF_NUM个采样点组合成完整波形
+        for (i = 0; i < PRE_BUF_NUM; i++) //预缓存中第一个和最后一个采样值相等，舍掉第一个值，将剩余PRE_BUF_NUM-1个采样点按采样顺序排序，作为ADCSampling的前PRE_BUF_NUM-1个采样点
         {
             if (ADCInterrupt)
                 return ADCSampling;
-            if (++j > PRE_BUF_NUM) //Ԥ�����������ת��Ԥ����ڶ���λ��
+            if (++j > PRE_BUF_NUM) //预缓存溢出，跳转到预缓存第二个位置
                 j = 1;
 
             ADCSampling[i] = ADCPreSampling[j];
         }
     }
 
-    /* �Զ�����
+    /* 自动触发
        Auto Trigger Mode */
     else
     {
-        P_Ready = 1; //��ʼ����������ָʾ��
+        P_Ready = 1; //开始采样，点亮指示灯
         for (i = 0; i < SAMPLE_NUM; i++)
         {
             if (ADCInterrupt)
                 return ADCSampling;
             ADCSampling[i] = ADCRead(chx);
-            Delay3us();            //ѭ��������ʱ����������������3us
-            switch_Dealy(scale_h); //������ʱ
+            Delay3us();            //循环采样的时间间隔比连续采样慢3us
+            switch_Dealy(scale_h); //采样延时
 #ifdef DEBUG
             P15 = ~P15;
 #endif
         }
-        P_Ready = 0; //����������Ϩ��ָʾ��
+        P_Ready = 0; //采样结束，熄灭指示灯
     }
-    ADCComplete = 1; //��λ������ɱ�־
+    ADCComplete = 1; //置位采样完成标志
     return ADCSampling;
 }
 

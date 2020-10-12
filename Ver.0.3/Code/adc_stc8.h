@@ -48,7 +48,7 @@
 #define uint32 unsigned long int
 #endif
 
-//ADC ���⹦�ܼĴ���
+//ADC 特殊功能寄存器
 // sfr ADC_CONTR = 0xbc;
 // sfr ADC_RES = 0xbd;
 // sfr ADC_RESL = 0xbe;
@@ -59,73 +59,73 @@ __sfr __at (0xbe) ADC_RESL;
 __sfr __at (0xde) ADCCFG;
 
 
-//Bandgap��ѹ��RAM��ROM�еĴ�ŵ�ַ����λmV��RAM�е������п��ܱ�����������Ƽ�ʹ��ROM�е����ݣ�RAM�е����ݿ�����Ϊ��ѡ
-//WORD idata Vbg_RAM _at_ 0xef; //����ֻ��256�ֽ�RAM��MCU��ŵ�ַΪ0EFH
-//idata �� EFH ��ַ��Ÿ��ֽ�
-//idata �� F0H ��ַ��ŵ��ֽ�
-//WORD idata Vbg_RAM _at_ 0x6f; //����ֻ��128�ֽ�RAM��MCU��ŵ�ַΪ06FH
-//ע��:��Ҫ�����ش���ʱѡ��"��ID��ǰ��?��Ҫ���Բ���"ѡ��,�ſ��ڳ���ROM�л�ȡ�˲���
-//WORD code Vbg_ROM _at_ 0x03f7; //1K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x07f7; //2K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x0bf7; //3K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x0ff7; //4K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x13f7; //5K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x1ff7; //8K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x27f7; //10K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x2ff7; //12K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x3ff7; //16K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x4ff7; //20K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x5ff7; //24K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x6ff7; //28K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x7ff7; //32K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0x9ff7; //40K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0xbff7; //48K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0xcff7; //52K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0xdff7; //56K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0xeff7; //60K����ռ��MCU
-//WORD code Vbg_ROM _at_ 0xfdf7; //64K����ռ��MCU
+//Bandgap电压在RAM和ROM中的存放地址，单位mV，RAM中的数据有可能被冲掉，所以推荐使用ROM中的数据，RAM中的数据可以作为备选
+//WORD idata Vbg_RAM _at_ 0xef; //对于只有256字节RAM的MCU存放地址为0EFH
+//idata 的 EFH 地址存放高字节
+//idata 的 F0H 地址存放低字节
+//WORD idata Vbg_RAM _at_ 0x6f; //对于只有128字节RAM的MCU存放地址为06FH
+//注意:需要在下载代码时选择"在ID号前添?重要测试参数"选项,才可在程序ROM中获取此参数
+//WORD code Vbg_ROM _at_ 0x03f7; //1K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x07f7; //2K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x0bf7; //3K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x0ff7; //4K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x13f7; //5K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x1ff7; //8K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x27f7; //10K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x2ff7; //12K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x3ff7; //16K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x4ff7; //20K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x5ff7; //24K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x6ff7; //28K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x7ff7; //32K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0x9ff7; //40K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0xbff7; //48K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0xcff7; //52K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0xdff7; //56K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0xeff7; //60K程序空间的MCU
+//WORD code Vbg_ROM _at_ 0xfdf7; //64K程序空间的MCU
 #define BGV_ADR 0xfdf7
-#define ADC_POWER 0x80     //ADC��Դ����λ
-#define ADC_FLAG 0x20      //ADC��ɱ�־
-#define ADC_START 0x40     //ADC��ʼ����λ
-#define ADC_SPEED_512 0x0F //512��ʱ��
-#define ADC_SPEED_480 0x0E //480��ʱ��
-#define ADC_SPEED_448 0x0D //448��ʱ��
-#define ADC_SPEED_416 0x0C //416��ʱ��
-#define ADC_SPEED_384 0x0B //384��ʱ��
-#define ADC_SPEED_352 0x0A //352��ʱ��
-#define ADC_SPEED_320 0x09 //320��ʱ��
-#define ADC_SPEED_288 0x08 //288��ʱ��
-#define ADC_SPEED_256 0x07 //256��ʱ��
-#define ADC_SPEED_224 0x06 //224��ʱ��
-#define ADC_SPEED_192 0x05 //192��ʱ��
-#define ADC_SPEED_160 0x04 //160��ʱ��
-#define ADC_SPEED_128 0x03 //128��ʱ��
-#define ADC_SPEED_96 0x02  //96��ʱ��
-#define ADC_SPEED_64 0x01  //64��ʱ��
-#define ADC_SPEED_32 0x00  //32��ʱ��
-#define RESFMT 0x20        //ת���������λ�������0x00���Ҷ���0x20
-#define ADC_CHS_10 0x00    //��P1.0��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_11 0x01    //��P1.1��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_12 0x02    //��P1.2��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_13 0x03    //��P1.3��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_14 0x04    //��P1.4��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_15 0x05    //��P1.5��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_16 0x06    //��P1.6��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_17 0x07    //��P1.7��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_00 0x08    //��P0.0��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_01 0x09    //��P0.1��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_02 0x0A    //��P0.2��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_03 0x0B    //��P0.3��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_04 0x0C    //��P0.4��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_05 0x0D    //��P0.5��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_06 0x0E    //��P0.6��ģ��ֵ����ADCģ��ͨ��
-#define ADC_CHS_BG 0x0F    //����16ͨ�����ڲ�BandGap�ο���ѹ����ģ��ֵ����ADCģ��ͨ��
+#define ADC_POWER 0x80     //ADC电源控制位
+#define ADC_FLAG 0x20      //ADC完成标志
+#define ADC_START 0x40     //ADC起始控制位
+#define ADC_SPEED_512 0x0F //512个时钟
+#define ADC_SPEED_480 0x0E //480个时钟
+#define ADC_SPEED_448 0x0D //448个时钟
+#define ADC_SPEED_416 0x0C //416个时钟
+#define ADC_SPEED_384 0x0B //384个时钟
+#define ADC_SPEED_352 0x0A //352个时钟
+#define ADC_SPEED_320 0x09 //320个时钟
+#define ADC_SPEED_288 0x08 //288个时钟
+#define ADC_SPEED_256 0x07 //256个时钟
+#define ADC_SPEED_224 0x06 //224个时钟
+#define ADC_SPEED_192 0x05 //192个时钟
+#define ADC_SPEED_160 0x04 //160个时钟
+#define ADC_SPEED_128 0x03 //128个时钟
+#define ADC_SPEED_96 0x02  //96个时钟
+#define ADC_SPEED_64 0x01  //64个时钟
+#define ADC_SPEED_32 0x00  //32个时钟
+#define RESFMT 0x20        //转换结果控制位，左对齐0x00，右对齐0x20
+#define ADC_CHS_10 0x00    //将P1.0的模拟值输入ADC模拟通道
+#define ADC_CHS_11 0x01    //将P1.1的模拟值输入ADC模拟通道
+#define ADC_CHS_12 0x02    //将P1.2的模拟值输入ADC模拟通道
+#define ADC_CHS_13 0x03    //将P1.3的模拟值输入ADC模拟通道
+#define ADC_CHS_14 0x04    //将P1.4的模拟值输入ADC模拟通道
+#define ADC_CHS_15 0x05    //将P1.5的模拟值输入ADC模拟通道
+#define ADC_CHS_16 0x06    //将P1.6的模拟值输入ADC模拟通道
+#define ADC_CHS_17 0x07    //将P1.7的模拟值输入ADC模拟通道
+#define ADC_CHS_00 0x08    //将P0.0的模拟值输入ADC模拟通道
+#define ADC_CHS_01 0x09    //将P0.1的模拟值输入ADC模拟通道
+#define ADC_CHS_02 0x0A    //将P0.2的模拟值输入ADC模拟通道
+#define ADC_CHS_03 0x0B    //将P0.3的模拟值输入ADC模拟通道
+#define ADC_CHS_04 0x0C    //将P0.4的模拟值输入ADC模拟通道
+#define ADC_CHS_05 0x0D    //将P0.5的模拟值输入ADC模拟通道
+#define ADC_CHS_06 0x0E    //将P0.6的模拟值输入ADC模拟通道
+#define ADC_CHS_BG 0x0F    //将第16通道（内部BandGap参考电压）的模拟值输入ADC模拟通道
 
-uint16 GetADC_CHX(uint8 chx);                 //���chxͨ��ADC
-uint16 GetVoltage(uint8 chx, uint16 lsb);     //���chxͨ����ѹֵ mV
-uint16 *GetBGV(void);                         //����ڲ��ο���ѹBGV mV
-uint16 *GetWaveADC(uint8 chx, uint8 scale_h); //��ò��β���
+uint16 GetADC_CHX(uint8 chx);                 //获得chx通道ADC
+uint16 GetVoltage(uint8 chx, uint16 lsb);     //获得chx通道电压值 mV
+uint16 *GetBGV(void);                         //获得内部参考电压BGV mV
+uint16 *GetWaveADC(uint8 chx, uint8 scale_h); //获得波形采样
 
 #endif
 #endif

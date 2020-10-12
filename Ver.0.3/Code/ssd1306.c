@@ -25,32 +25,32 @@
 
     Note:
 
-    °æ±¾£ºV0.2
-    ×÷Õß£ºÀÏÁõ°®µ·¹Ä
-    Ê±¼ä£º2020-04-24
-    ÀÏÁõ°®µ·¹Ä£¨È«ÍøÍ¬Ãû£©ÆÚ´ıÄúµÄ¹Ø×¢£¡
+    ç‰ˆæœ¬ï¼šV0.2
+    ä½œè€…ï¼šè€åˆ˜çˆ±æ£é¼“
+    æ—¶é—´ï¼š2020-04-24
+    è€åˆ˜çˆ±æ£é¼“ï¼ˆå…¨ç½‘åŒåï¼‰æœŸå¾…æ‚¨çš„å…³æ³¨ï¼
 
-    ËµÃ÷£º
-    ÎªMini DSOÕâ¸öÏîÄ¿ÁÙÊ±±àĞ´µÄSSD1306 128x64Çı¶¯£¬²¢²»ÍêÉÆ
-    ÓĞĞ´×Ö·û£¬×Ö·û´®£¬Êı×Ö£¬16x16ÖĞÎÄ×Ö·û£¬»­Ë®Æ½Ïß£¬´¹Ö±Ïß£¬ÈÎÒâÁ½µãÏß¶Î£¬»æÖÆÍ¼Æ¬µÈ¹¦ÄÜ
-    Ö÷Òª²Î¿¼ÁËArduinoÖĞAdafruit SSD1306µÄ¿âº¯Êı
-    ²ÉÓÃÈ«ÆÁbufÇı¶¯£¬ĞèÕ¼ÓÃ128x8¸öuint8ÄÚ´æ¿Õ¼ä
-    È«ÆÁ»º´æ²Ù¿ØÆÁÄ»ÄÚÈİ±È½Ï·½±ã£¬Ë¢ĞÂËÙ¶È¿ì£¬µ«¶Ôµ¥Æ¬»úµÄÄÚ´æ´óĞ¡ÓĞÒªÇó
-    F6x8×ÖÌåÀ´×ÔÖĞ¾°Ô°µç×ÓµÄDEMO
+    è¯´æ˜ï¼š
+    ä¸ºMini DSOè¿™ä¸ªé¡¹ç›®ä¸´æ—¶ç¼–å†™çš„SSD1306 128x64é©±åŠ¨ï¼Œå¹¶ä¸å®Œå–„
+    æœ‰å†™å­—ç¬¦ï¼Œå­—ç¬¦ä¸²ï¼Œæ•°å­—ï¼Œ16x16ä¸­æ–‡å­—ç¬¦ï¼Œç”»æ°´å¹³çº¿ï¼Œå‚ç›´çº¿ï¼Œä»»æ„ä¸¤ç‚¹çº¿æ®µï¼Œç»˜åˆ¶å›¾ç‰‡ç­‰åŠŸèƒ½
+    ä¸»è¦å‚è€ƒäº†Arduinoä¸­Adafruit SSD1306çš„åº“å‡½æ•°
+    é‡‡ç”¨å…¨å±bufé©±åŠ¨ï¼Œéœ€å ç”¨128x8ä¸ªuint8å†…å­˜ç©ºé—´
+    å…¨å±ç¼“å­˜æ“æ§å±å¹•å†…å®¹æ¯”è¾ƒæ–¹ä¾¿ï¼Œåˆ·æ–°é€Ÿåº¦å¿«ï¼Œä½†å¯¹å•ç‰‡æœºçš„å†…å­˜å¤§å°æœ‰è¦æ±‚
+    F6x8å­—ä½“æ¥è‡ªä¸­æ™¯å›­ç”µå­çš„DEMO
 
     2020-04-30
-    1.  ¸üĞÂOLED_Draw_Byteº¯Êı£¬ĞŞÕıÒÔ¸²¸Ç·½Ê½¿çÒ³Ğ´ÈëÊ±»áÍ¬Ê±ĞŞ¸ÄÁ½Ò³ÄÚÈİ£¬ÉÏÏÂÒ³µÄÆäËû×Ö·û±»¸²¸Ç£¬ÏÖÔÚ¿ÉÒÔÔÚÈÎÒâµãĞ´Èë×Ö·û£¬²»»áÓ°ÏìÉÏÏÂÒ³µÄÄÚÈİ
-    2.  ÓÅ»¯Ëã·¨/8¸ÄÎª>>3£¬%8¸ÄÎª&7
-    3.  ĞŞÕıOLED³õÊ¼»¯´íÎó£¬ĞĞÄ£Ê½ÒªÉèÖÃ0x21ºÍ0x22ÉèÖÃÏÔÊ¾·¶Î§£¬²¢ÓÃ0x40ÉèÖÃÆğÊ¼ĞĞ£¬
-        0xB0-0xB7ÉèÖÃÆğÊ¼Ò³ÊÇÒ³ÃæÄ£Ê½×¨ÓÃ£¬ÔÚĞĞÄ£Ê½ÏÂÊ¹ÓÃ»áÔì³ÉÉèÖÃµÄÆğÊ¼Ò³µÚÒ»´Îµ½´ï½áÎ²Ê±ÎŞ·¨×Ô¶¯»»Ò³
-    4.  É¾³ıOLED_Set_PosÖĞ¶àÓàµÄÉèÖÃÄÚ´æÎ»ÖÃÃüÁî
-    5.  »­Ïß»òÏñËØÊ±£¬ÖÃÎ»OLED_ReverseÔò½øĞĞ²Á³ı
+    1.  æ›´æ–°OLED_Draw_Byteå‡½æ•°ï¼Œä¿®æ­£ä»¥è¦†ç›–æ–¹å¼è·¨é¡µå†™å…¥æ—¶ä¼šåŒæ—¶ä¿®æ”¹ä¸¤é¡µå†…å®¹ï¼Œä¸Šä¸‹é¡µçš„å…¶ä»–å­—ç¬¦è¢«è¦†ç›–ï¼Œç°åœ¨å¯ä»¥åœ¨ä»»æ„ç‚¹å†™å…¥å­—ç¬¦ï¼Œä¸ä¼šå½±å“ä¸Šä¸‹é¡µçš„å†…å®¹
+    2.  ä¼˜åŒ–ç®—æ³•/8æ”¹ä¸º>>3ï¼Œ%8æ”¹ä¸º&7
+    3.  ä¿®æ­£OLEDåˆå§‹åŒ–é”™è¯¯ï¼Œè¡Œæ¨¡å¼è¦è®¾ç½®0x21å’Œ0x22è®¾ç½®æ˜¾ç¤ºèŒƒå›´ï¼Œå¹¶ç”¨0x40è®¾ç½®èµ·å§‹è¡Œï¼Œ
+        0xB0-0xB7è®¾ç½®èµ·å§‹é¡µæ˜¯é¡µé¢æ¨¡å¼ä¸“ç”¨ï¼Œåœ¨è¡Œæ¨¡å¼ä¸‹ä½¿ç”¨ä¼šé€ æˆè®¾ç½®çš„èµ·å§‹é¡µç¬¬ä¸€æ¬¡åˆ°è¾¾ç»“å°¾æ—¶æ— æ³•è‡ªåŠ¨æ¢é¡µ
+    4.  åˆ é™¤OLED_Set_Posä¸­å¤šä½™çš„è®¾ç½®å†…å­˜ä½ç½®å‘½ä»¤
+    5.  ç”»çº¿æˆ–åƒç´ æ—¶ï¼Œç½®ä½OLED_Reverseåˆ™è¿›è¡Œæ“¦é™¤
 */
 #include "ssd1306.h"
 #include "ssd1306font.h"
 
-//OLEDµÄÏÔ´æ
-//´æ·Å¸ñÊ½ÈçÏÂ.
+//OLEDçš„æ˜¾å­˜
+//å­˜æ”¾æ ¼å¼å¦‚ä¸‹.
 //[0]0 1 2 3 ... 127
 //[1]0 1 2 3 ... 127
 //[2]0 1 2 3 ... 127
@@ -71,12 +71,12 @@
 
 __bit _OLED_Reverse = 0;     
 __bit _OLED_Overlap = 1;
-uint8 _buf[WIDTH * PAGES]; //È«ÆÁ»º´æ,ºáÏòWIDTH¸öÏñËØ£¬×İÏòPAGESÒ³£¬Ò³ÄÚÃ¿8¸öÏñËØ×÷ÎªÒ»¸ö×Ö½Ú£¬¹²WIDTH * PAGES¸ö×Ö½Ú
+uint8 _buf[WIDTH * PAGES]; //å…¨å±ç¼“å­˜,æ¨ªå‘WIDTHä¸ªåƒç´ ï¼Œçºµå‘PAGESé¡µï¼Œé¡µå†…æ¯8ä¸ªåƒç´ ä½œä¸ºä¸€ä¸ªå­—èŠ‚ï¼Œå…±WIDTH * PAGESä¸ªå­—èŠ‚
 
 static char _x, _y;
 static uint8 _Font_Width = 6;
 
-/*  Ğ´ÃüÁî
+/*  å†™å‘½ä»¤
     Write Command   */
 void OLED_Write_Command(uint8 dat)
 {
@@ -88,7 +88,7 @@ void OLED_Write_Command(uint8 dat)
     {
         OLED_SCLK_Clr();
 
-        if (dat & 0x80) //ÅĞ¶ÏÊı¾İ×î¸ßÎ»ÊÇ1»¹ÊÇ0
+        if (dat & 0x80) //åˆ¤æ–­æ•°æ®æœ€é«˜ä½æ˜¯1è¿˜æ˜¯0
         {
             OLED_SDIN_Set();
         }
@@ -103,7 +103,7 @@ void OLED_Write_Command(uint8 dat)
     //    OLED_DC_Set();
 }
 
-/*  Ğ´Êı¾İ
+/*  å†™æ•°æ®
     Write Data  */
 void OLED_Write_Data(uint8 dat)
 {
@@ -115,7 +115,7 @@ void OLED_Write_Data(uint8 dat)
     {
         OLED_SCLK_Clr();
 
-        if (dat & 0x80) //ÅĞ¶ÏÊı¾İ×î¸ßÎ»ÊÇ1»¹ÊÇ0
+        if (dat & 0x80) //åˆ¤æ–­æ•°æ®æœ€é«˜ä½æ˜¯1è¿˜æ˜¯0
         {
             OLED_SDIN_Set();
         }
@@ -130,28 +130,28 @@ void OLED_Write_Data(uint8 dat)
     //    OLED_DC_Set();
 }
 
-/* 1£º·´ÏÔ£¬0£ºÕı³£
+/* 1ï¼šåæ˜¾ï¼Œ0ï¼šæ­£å¸¸
    1: Reverse, 0: Normal*/
 void OLED_Reverse(__bit i)
 {
     _OLED_Reverse = i;
 }
 
-/* »æÍ¼Ä£Ê½£º1£ºµş¼Ó£¬0£º¸²¸Ç
+/* ç»˜å›¾æ¨¡å¼ï¼š1ï¼šå åŠ ï¼Œ0ï¼šè¦†ç›–
    Draw Mode: 1: overlap, 0: Redraw*/
 void OLED_Overlap(__bit i)
 {
     _OLED_Overlap = i;
 }
 
-/* ÉèÖÃASCII×Ö·û¿í¶È
+/* è®¾ç½®ASCIIå­—ç¬¦å®½åº¦
    Set ASCII character width*/
 void OLED_SetFontWidth(uint8 w)
 {
     _Font_Width = w;
 }
 
-/* ÉèÖÃÄÚ´æÎ»ÖÃx:0-127£¬y:0-63
+/* è®¾ç½®å†…å­˜ä½ç½®x:0-127ï¼Œy:0-63
    Set Ram address x:0-127, y:0-63*/
 void OLED_Set_Pos(uint8 x, uint8 y)
 {
@@ -159,18 +159,18 @@ void OLED_Set_Pos(uint8 x, uint8 y)
     _y = y;
 }
 
-/* Çå³ı»º´æÄÚÈİ
+/* æ¸…é™¤ç¼“å­˜å†…å®¹
    Clear data in buffer*/
 void OLED_Clear(void)
 {
     memset(_buf, 0x00, WIDTH * PAGES);
 }
 
-/*  »æÖÆ×Ö½ÚÖÁ»º´æ
-    offset: ×Ö½ÚÆ«ÒÆÁ¿
-    reserve_hl: ±£Áô¸ßÎ»»òµÍÎ»
-    ±ÈÈçÒªĞ´ÈëµÄ×Ö½Ú1111 1111¿çÁËÁ½Ò³0001 1111 1110 0000£¬
-    ÔÚ¸²¸ÇÄ£Ê½ÏÂ£¬Îª±ÜÃâ¸²¸ÇÏàÁÚµÄÄÚÈİ£¬ÔÚĞ´Èë0001 1111Ê±£¬Ö¸¶¨offset=3£¬reserve_hl=1£¬Ğ´Èë1110 0000Ê±Ö¸¶¨Ö¸¶¨offset=5£¬reserve_hl=0
+/*  ç»˜åˆ¶å­—èŠ‚è‡³ç¼“å­˜
+    offset: å­—èŠ‚åç§»é‡
+    reserve_hl: ä¿ç•™é«˜ä½æˆ–ä½ä½
+    æ¯”å¦‚è¦å†™å…¥çš„å­—èŠ‚1111 1111è·¨äº†ä¸¤é¡µ0001 1111 1110 0000ï¼Œ
+    åœ¨è¦†ç›–æ¨¡å¼ä¸‹ï¼Œä¸ºé¿å…è¦†ç›–ç›¸é‚»çš„å†…å®¹ï¼Œåœ¨å†™å…¥0001 1111æ—¶ï¼ŒæŒ‡å®šoffset=3ï¼Œreserve_hl=1ï¼Œå†™å…¥1110 0000æ—¶æŒ‡å®šæŒ‡å®šoffset=5ï¼Œreserve_hl=0
     Draw byte to buffer
     offset: Offset of Byte
     reserve_hl: Reserve High or Low
@@ -190,14 +190,14 @@ void OLED_Draw_Byte(uint8 *pBuf, uint8 mask, uint8 offset, __bit reserve_hl)
     {
         if (_OLED_Reverse)
         {
-            /* ±£Áô¸ßÎ»
+            /* ä¿ç•™é«˜ä½
                Reserve upper */
             if (reserve_hl) 
             {
                 *pBuf &= (~mask) | (0xFF << (8 - offset));
                 *pBuf |= (~mask) & (0xFF >> offset);
             }
-            /* ±£ÁôµÍÎ»
+            /* ä¿ç•™ä½ä½
                Reserve lower */
             else 
             {
@@ -207,14 +207,14 @@ void OLED_Draw_Byte(uint8 *pBuf, uint8 mask, uint8 offset, __bit reserve_hl)
         }
         else
         {
-            /* ±£Áô¸ßÎ»
+            /* ä¿ç•™é«˜ä½
                Reserve upper */
             if (reserve_hl) 
             {
                 *pBuf &= mask | (0xFF << (8 - offset));
                 *pBuf |= mask & (0xFF >> offset);
             }
-            /* ±£ÁôµÍÎ»
+            /* ä¿ç•™ä½ä½
                Reserve lower */ 
             else 
             {
@@ -225,7 +225,7 @@ void OLED_Draw_Byte(uint8 *pBuf, uint8 mask, uint8 offset, __bit reserve_hl)
     }
 }
 
-/*  »æÖÆ×Ö·ûÖÁ»º´æ
+/*  ç»˜åˆ¶å­—ç¬¦è‡³ç¼“å­˜
     Draw char to buffer*/
 void OLED_DrawChar(uint8 x, uint8 y, uint8 chr)
 {
@@ -256,7 +256,7 @@ void OLED_DrawChar(uint8 x, uint8 y, uint8 chr)
     }
 }
 
-/*  »æÖÆ×Ö·û´®ÖÁ»º´æ
+/*  ç»˜åˆ¶å­—ç¬¦ä¸²è‡³ç¼“å­˜
     Draw string to buffer   */
 void OLED_DrawString(uint8 *chr)
 {
@@ -280,7 +280,7 @@ void OLED_DrawString(uint8 *chr)
 /* m^n */
 uint32 oled_pow(uint8 m, uint8 n) //reentrant
 {
-    /* ³£¹æËã·¨ */
+    /* å¸¸è§„ç®—æ³• */
     uint32 result = 1;
 
     while (n--)
@@ -288,14 +288,14 @@ uint32 oled_pow(uint8 m, uint8 n) //reentrant
 
     return result;
 
-    /* µİ¹éËã·¨ ĞèÓÃreentrantĞŞÊÎº¯Êı*/
+    /* é€’å½’ç®—æ³• éœ€ç”¨reentrantä¿®é¥°å‡½æ•°*/
     // if (n != 0)
     //     return (m * oled_pow(m, n - 1));
     // else
     //     return 1;
 }
 
-/*  »æÖÆÊı×ÖÖÁ»º´æ
+/*  ç»˜åˆ¶æ•°å­—è‡³ç¼“å­˜
     Draw digit to buffer
     len: length of digit
     digit:  0~4294967295   */
@@ -334,7 +334,7 @@ void OLED_DrawNum(uint32 digit, uint8 len)
     _x += len;
 }
 
-/*  »æÖÆ16x16ºº×ÖÖÁ»º´æ
+/*  ç»˜åˆ¶16x16æ±‰å­—è‡³ç¼“å­˜
     Draw 16x16 Chinese to buffer    */
 void OLED_DrwCHS_16x16(uint8 chs_no)
 {
@@ -351,7 +351,7 @@ void OLED_DrwCHS_16x16(uint8 chs_no)
     _x += 16;
 }
 
-/*  »æÖÆÒ»¸öÏñËØÖÁ»º´æ
+/*  ç»˜åˆ¶ä¸€ä¸ªåƒç´ è‡³ç¼“å­˜
     Draw one pixel to buffer    */
 void OLED_DrawPixel(uint8 x, uint8 y)
 {
@@ -380,7 +380,7 @@ void OLED_DrawPixel(uint8 x, uint8 y)
     }
 }
 
-/*  »æÖÆÁ½µãÏß¶ÎÖÁ»º´æ
+/*  ç»˜åˆ¶ä¸¤ç‚¹çº¿æ®µè‡³ç¼“å­˜
     Draw line between two points to buffer  */
 void OLED_DrawLine(uint8 x0, uint8 y0, uint8 x1, uint8 y1)
 {
@@ -445,7 +445,7 @@ void OLED_DrawLine(uint8 x0, uint8 y0, uint8 x1, uint8 y1)
     }
 }
 
-/*  »æÖÆ´¹Ö±ÏßÖÁ»º´æ
+/*  ç»˜åˆ¶å‚ç›´çº¿è‡³ç¼“å­˜
     Draw vertical line to buffer*/
 void OLED_DrawVLine(uint8 x, uint8 y, uint8 w)
 {
@@ -474,7 +474,7 @@ void OLED_DrawVLine(uint8 x, uint8 y, uint8 w)
     }
 }
 
-/*  »æÖÆË®Æ½ÏßÖÁ»º´æ
+/*  ç»˜åˆ¶æ°´å¹³çº¿è‡³ç¼“å­˜
     Draw horizontal line to buffer  */
 void OLED_DrawHLine(uint8 x, uint8 y, uint8 w)
 {
@@ -503,7 +503,7 @@ void OLED_DrawHLine(uint8 x, uint8 y, uint8 w)
     }
 }
 
-/*  »æÖÆÍ¼Æ¬ÖÁ»º´æ
+/*  ç»˜åˆ¶å›¾ç‰‡è‡³ç¼“å­˜
     Draw pic to buffer  */
 void OLED_DrawBMP(uint8 x0, uint8 y0, uint8 x1, uint8 y1, uint8 *BMP, uint16 len)
 {
@@ -559,7 +559,7 @@ void OLED_DrawBMP(uint8 x0, uint8 y0, uint8 x1, uint8 y1, uint8 *BMP, uint16 len
     }
 }
 
-/*  ½«»º´æÄÚÈİÏÔÊ¾µ½ÆÁÄ»ÉÏ
+/*  å°†ç¼“å­˜å†…å®¹æ˜¾ç¤ºåˆ°å±å¹•ä¸Š
     Send buffer to display  */
 void OLED_Display(void)
 {
@@ -576,7 +576,7 @@ void OLED_Display(void)
     }
 }
 
-/*  ³õÊ¼»¯SSD1306
+/*  åˆå§‹åŒ–SSD1306
     Initialize SSD1306  */
 void OLED_Init(void)
 {
@@ -589,8 +589,8 @@ void OLED_Init(void)
     OLED_Write_Command(0xAE); //--Turn off oled panel
 
     /*  
-        ÒÔÏÂÈıÌõÃüÁîÊÇ¸øÒ³ÃæÄ£Ê½ÓÃµÄ£¬ĞĞÄ£Ê½ºÍÁĞÄ£Ê½²»ÒªÉèÖÃ£¬»áÒıÆğÎÊÌâ
-        ĞĞÄ£Ê½»òÁĞÄ£Ê½£¬ÒªÓÃ0x21ºÍ0x22ÉèÖÃ·¶Î§
+        ä»¥ä¸‹ä¸‰æ¡å‘½ä»¤æ˜¯ç»™é¡µé¢æ¨¡å¼ç”¨çš„ï¼Œè¡Œæ¨¡å¼å’Œåˆ—æ¨¡å¼ä¸è¦è®¾ç½®ï¼Œä¼šå¼•èµ·é—®é¢˜
+        è¡Œæ¨¡å¼æˆ–åˆ—æ¨¡å¼ï¼Œè¦ç”¨0x21å’Œ0x22è®¾ç½®èŒƒå›´
         Following three commands are for Page Addressing Mode. Do not set them in Horizontal addressing mode or Vertical addressing mode, will rise problem.
         For Horizontal addressing mode or Vertical addressing mode, should use 0x21 and 0x22 set column and page address
     */

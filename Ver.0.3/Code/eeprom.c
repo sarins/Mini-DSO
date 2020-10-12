@@ -4,61 +4,61 @@
 #include "eeprom.h"
 
 /*----------------------------
-¹Ø±ÕIAP
+å…³é—­IAP
 ----------------------------*/
 void IapIdle()
 {
-    IAP_CONTR = 0;     //¹Ø±ÕIAP¹¦ÄÜ
-    IAP_CMD = IAP_IDL; //Çå³ıÃüÁî¼Ä´æÆ÷
-    IAP_TRIG = 0;      //Çå³ı´¥·¢¼Ä´æÆ÷
-    IAP_ADDRH = 0x80;  //½«µØÖ·ÉèÖÃµ½·ÇIAPÇøÓò
+    IAP_CONTR = 0;     //å…³é—­IAPåŠŸèƒ½
+    IAP_CMD = IAP_IDL; //æ¸…é™¤å‘½ä»¤å¯„å­˜å™¨
+    IAP_TRIG = 0;      //æ¸…é™¤è§¦å‘å¯„å­˜å™¨
+    IAP_ADDRH = 0x80;  //å°†åœ°å€è®¾ç½®åˆ°éIAPåŒºåŸŸ
     IAP_ADDRL = 0;
 }
 /*----------------------------
-´ÓISP/IAP/EEPROMÇøÓò¶ÁÈ¡Ò»×Ö½Ú
+ä»ISP/IAP/EEPROMåŒºåŸŸè¯»å–ä¸€å­—èŠ‚
 ----------------------------*/
 uint8 IapReadByte(uint16 addr)
 {
-    uint8 dat;                  //Êı¾İ»º³åÇø
-    IAP_CONTR = IAPEN | IAP_WT; //Ê¹ÄÜIAP
-    IAP_CMD = IAP_READ;         //ÉèÖÃIAPÃüÁî
-    IAP_ADDRL = addr;           //ÉèÖÃIAPµÍµØÖ·
-    IAP_ADDRH = addr >> 8;      //ÉèÖÃIAP¸ßµØÖ·
-    IAP_TRIG = 0x5a;            //Ğ´´¥·¢ÃüÁî(0x5a)
-    IAP_TRIG = 0xa5;            //Ğ´´¥·¢ÃüÁî(0xa5)
-    _nop_();                    //µÈ´ıISP/IAP/EEPROM²Ù×÷Íê³É
-    dat = IAP_DATA;             //¶ÁISP/IAP/EEPROMÊı¾İ
-    IapIdle();                  //¹Ø±ÕIAP¹¦ÄÜ
-    return dat;                 //·µ»Ø
+    uint8 dat;                  //æ•°æ®ç¼“å†²åŒº
+    IAP_CONTR = IAPEN | IAP_WT; //ä½¿èƒ½IAP
+    IAP_CMD = IAP_READ;         //è®¾ç½®IAPå‘½ä»¤
+    IAP_ADDRL = addr;           //è®¾ç½®IAPä½åœ°å€
+    IAP_ADDRH = addr >> 8;      //è®¾ç½®IAPé«˜åœ°å€
+    IAP_TRIG = 0x5a;            //å†™è§¦å‘å‘½ä»¤(0x5a)
+    IAP_TRIG = 0xa5;            //å†™è§¦å‘å‘½ä»¤(0xa5)
+    _nop_();                    //ç­‰å¾…ISP/IAP/EEPROMæ“ä½œå®Œæˆ
+    dat = IAP_DATA;             //è¯»ISP/IAP/EEPROMæ•°æ®
+    IapIdle();                  //å…³é—­IAPåŠŸèƒ½
+    return dat;                 //è¿”å›
 }
 
 /*----------------------------
-Ğ´Ò»×Ö½ÚÊı¾İµ½ISP/IAP/EEPROMÇøÓò
+å†™ä¸€å­—èŠ‚æ•°æ®åˆ°ISP/IAP/EEPROMåŒºåŸŸ
 ----------------------------*/
 void IapProgramByte(uint16 addr, uint8 dat)
 {
-    IAP_CONTR = IAPEN | IAP_WT; //Ê¹ÄÜIAP
-    IAP_CMD = IAP_WRITE;        //ÉèÖÃIAPÃüÁî
-    IAP_ADDRL = addr;           //ÉèÖÃIAPµÍµØÖ·
-    IAP_ADDRH = addr >> 8;      //ÉèÖÃIAP¸ßµØÖ·
-    IAP_DATA = dat;             //Ğ´ISP/IAP/EEPROMÊı¾İ
-    IAP_TRIG = 0x5a;            //Ğ´´¥·¢ÃüÁî(0x5a)
-    IAP_TRIG = 0xa5;            //Ğ´´¥·¢ÃüÁî(0xa5)
-    _nop_();                    //µÈ´ıISP/IAP/EEPROM²Ù×÷Íê³É
+    IAP_CONTR = IAPEN | IAP_WT; //ä½¿èƒ½IAP
+    IAP_CMD = IAP_WRITE;        //è®¾ç½®IAPå‘½ä»¤
+    IAP_ADDRL = addr;           //è®¾ç½®IAPä½åœ°å€
+    IAP_ADDRH = addr >> 8;      //è®¾ç½®IAPé«˜åœ°å€
+    IAP_DATA = dat;             //å†™ISP/IAP/EEPROMæ•°æ®
+    IAP_TRIG = 0x5a;            //å†™è§¦å‘å‘½ä»¤(0x5a)
+    IAP_TRIG = 0xa5;            //å†™è§¦å‘å‘½ä»¤(0xa5)
+    _nop_();                    //ç­‰å¾…ISP/IAP/EEPROMæ“ä½œå®Œæˆ
     IapIdle();
 }
 /*----------------------------
-ÉÈÇø²Á³ı
+æ‰‡åŒºæ“¦é™¤
 ----------------------------*/
 void IapEraseSector(uint16 addr)
 {
-    IAP_CONTR = IAPEN | IAP_WT; //Ê¹ÄÜIAP
-    IAP_CMD = IAP_ERASE;        //ÉèÖÃIAPÃüÁî
-    IAP_ADDRL = addr;           //ÉèÖÃIAPµÍµØÖ·
-    IAP_ADDRH = addr >> 8;      //ÉèÖÃIAP¸ßµØÖ·
-    IAP_TRIG = 0x5a;            //Ğ´´¥·¢ÃüÁî(0x5a)
-    IAP_TRIG = 0xa5;            //Ğ´´¥·¢ÃüÁî(0xa5)
-    _nop_();                    //µÈ´ıISP/IAP/EEPROM²Ù×÷Íê³É
+    IAP_CONTR = IAPEN | IAP_WT; //ä½¿èƒ½IAP
+    IAP_CMD = IAP_ERASE;        //è®¾ç½®IAPå‘½ä»¤
+    IAP_ADDRL = addr;           //è®¾ç½®IAPä½åœ°å€
+    IAP_ADDRH = addr >> 8;      //è®¾ç½®IAPé«˜åœ°å€
+    IAP_TRIG = 0x5a;            //å†™è§¦å‘å‘½ä»¤(0x5a)
+    IAP_TRIG = 0xa5;            //å†™è§¦å‘å‘½ä»¤(0xa5)
+    _nop_();                    //ç­‰å¾…ISP/IAP/EEPROMæ“ä½œå®Œæˆ
     IapIdle();
 }
 
@@ -67,21 +67,21 @@ void IapEraseSector(uint16 addr)
    para_num: Length of parameters */
 __bit EEPROM_Save(uint8 *s, uint8 para_num)
 {
-    int i; //²»Òª¸Ä³Éuint8£¬Îó¸ÄÁËºÃ¼¸´Î£¡£¡
-	//ÉÈÇø²Á³ı
+    int i; //ä¸è¦æ”¹æˆuint8ï¼Œè¯¯æ”¹äº†å¥½å‡ æ¬¡ï¼ï¼
+	//æ‰‡åŒºæ“¦é™¤
     IapEraseSector(IAP_ADDRESS); 
-	//¼ì²âÊÇ·ñ²Á³ı³É¹¦(È«FF¼ì²â)
+	//æ£€æµ‹æ˜¯å¦æ“¦é™¤æˆåŠŸ(å…¨FFæ£€æµ‹)
     for (i = 0; i < 512; i++)    
     {
         if (IapReadByte(IAP_ADDRESS + i) != 0xff)
             return 0; 
     }
-	//±à³ÌEEPROM
+	//ç¼–ç¨‹EEPROM
     for (i = 0; i < para_num; i++) 
     {
         IapProgramByte(IAP_ADDRESS + i, *(s + i));
     }
-	//Ğ£ÑéEEPROM
+	//æ ¡éªŒEEPROM
     for (i = 0; i < para_num; i++) 
     {
         if (IapReadByte(IAP_ADDRESS + i) != *(s + i))

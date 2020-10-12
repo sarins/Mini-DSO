@@ -22,9 +22,9 @@
 #define int16 signed int
 #endif
 
-#define SAMPLE_NUM 220      //���������������ʾ������101���㣬���Ҵ�����ӵ�51���㵽��SAMPLE_NUM-50���㣬
-#define PRE_BUF_NUM 62      //���δ�������ͨ������Ԥ����������ڵ���52
-#define AFT_BUF_NUM 158     //���δ�������ͨ�����Ĵ����󻺴��������SAMPLE_NUM-PRE_BUF_NUM
+#define SAMPLE_NUM 220      //采样缓存点数，显示波形需101个点，查找触发点从第51个点到第SAMPLE_NUM-50个点，
+#define PRE_BUF_NUM 62      //单次触发和普通触发的预缓存点数大于等于52
+#define AFT_BUF_NUM 158     //单次触发和普通触发的触发后缓存点数等于SAMPLE_NUM-PRE_BUF_NUM
 
 #define _nop_() __asm nop __endasm
 
@@ -44,23 +44,6 @@ extern uint16 WaveLengthSumNum;
 extern uint32 WaveLengthSum;
 extern int8 ScaleH_tmp;
 extern uint8 OLED_Brightness;
-// extern bit OLED_BrightnessChanged;
-// extern bit EC11PressAndRotate;
-// extern bit DisplayUpdate;
-// extern bit ClearDisplay;
-// extern bit ClearWave;
-// extern bit ADCRunning;
-// extern bit ADCInterrupt;
-// extern bit UpdateVbat;
-// extern bit TriFail;
-// extern bit PlotMode;
-// extern bit OptionChanged;
-// extern bit TriSlope;
-// extern bit InSettings;
-// extern bit WaveScroll;
-// extern bit WaveUpdate;
-// extern bit ScaleV_Auto;
-// extern bit ADCComplete;
 extern __bit OLED_BrightnessChanged;
 extern __bit EC11PressAndRotate;
 extern __bit DisplayUpdate;

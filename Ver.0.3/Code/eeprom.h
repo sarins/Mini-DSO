@@ -15,7 +15,7 @@
 #define uint32 unsigned long int
 #endif
 
-/*IAP/ISP ÌØÊâ¹¦ÄÜ¼Ä´æÆ÷
+/*IAP/ISP ç‰¹æ®ŠåŠŸèƒ½å¯„å­˜å™¨
 IAP/ISP Special Function Register*/
 // sfr IAP_DATA = 0xc2;
 // sfr IAP_ADDRH = 0xc3;
@@ -42,24 +42,24 @@ __sfr __at (0xc5) ISP_CMD;
 __sfr __at (0xc6) ISP_TRIG;
 __sfr __at (0xc7) ISP_CONTR;
 
-#define IAP_IDL 0x00   //¿Õ²Ù×÷ / No operation
-#define IAP_READ 0x01  //¶ÁEEPROM / Read EEPROM
-#define IAP_WRITE 0x02 //Ğ´EEPROM / Write EEPROM
-#define IAP_ERASE 0x03 //²Á³ıEEPROM / Erase EEPROM
-#define IAPEN 0x80     //Ê¹ÄÜIAP / Enable IAP
-#define SWBS 0x40      /*Èí¼ş¸´Î»Ñ¡Ôñ¿ØÖÆÎ» 0£ºÈí¼ş¸´Î»ºó´ÓÓÃ»§´úÂë¿ªÊ¼Ö´ĞĞ³ÌĞò 1£ºÈí¼ş¸´Î»ºó´ÓÏµÍ³ ISP ¼à¿Ø´úÂëÇø¿ªÊ¼Ö´ĞĞ³ÌĞò \
+#define IAP_IDL 0x00   //ç©ºæ“ä½œ / No operation
+#define IAP_READ 0x01  //è¯»EEPROM / Read EEPROM
+#define IAP_WRITE 0x02 //å†™EEPROM / Write EEPROM
+#define IAP_ERASE 0x03 //æ“¦é™¤EEPROM / Erase EEPROM
+#define IAPEN 0x80     //ä½¿èƒ½IAP / Enable IAP
+#define SWBS 0x40      /*è½¯ä»¶å¤ä½é€‰æ‹©æ§åˆ¶ä½ 0ï¼šè½¯ä»¶å¤ä½åä»ç”¨æˆ·ä»£ç å¼€å§‹æ‰§è¡Œç¨‹åº 1ï¼šè½¯ä»¶å¤ä½åä»ç³»ç»Ÿ ISP ç›‘æ§ä»£ç åŒºå¼€å§‹æ‰§è¡Œç¨‹åº \
                         Software boot selection control bit, which should be used with SWRST                                                                                 \
                         0 : Execute the program from the user code area after the software reset                                                                             \
                         1 : Execute the program from the ISP memory area after the software reset*/
-#define SWRST 0x20     /*Èí¼ş¸´Î»¿ØÖÆÎ» 0£ºÎŞ¶¯×÷ 1£º²úÉúÈí¼ş¸´Î» \
+#define SWRST 0x20     /*è½¯ä»¶å¤ä½æ§åˆ¶ä½ 0ï¼šæ— åŠ¨ä½œ 1ï¼šäº§ç”Ÿè½¯ä»¶å¤ä½ \
                        Software reset trigger control                               \
                        0 : No operation                                             \
                        1: Generate software reset.*/
-#define CMD_FAIL 0x10  /*EEPROM²Ù×÷Ê§°Ü×´Ì¬Î»£¬ĞèÒªÈí¼şÇåÁã 0£º EEPROM ²Ù×÷ÕıÈ· 1£º EEPROM ²Ù×÷Ê§°Ü \
+#define CMD_FAIL 0x10  /*EEPROMæ“ä½œå¤±è´¥çŠ¶æ€ä½ï¼Œéœ€è¦è½¯ä»¶æ¸…é›¶ 0ï¼š EEPROM æ“ä½œæ­£ç¡® 1ï¼š EEPROM æ“ä½œå¤±è´¥ \
                        Command fail status bit for EEPROM operation which should be cleared by software                     \
                        0 : EEPROM operation is right                                                                        \
                        0: EEPROM operation is right*/
-/*EEPROM²Ù×÷µÄµÈ´ıÊ±¼ä
+/*EEPROMæ“ä½œçš„ç­‰å¾…æ—¶é—´
 EEPROM operation waiting time*/
 #define IAP_WT 0x00 //if SYSCLK<30MHz
 //#define IAP_WT 0x01 //if SYSCLK<24MHz
@@ -70,7 +70,7 @@ EEPROM operation waiting time*/
 //#define IAP_WT 0x06 //if SYSCLK<2MHz
 //#define IAP_WT 0x07 //if SYSCLK<1MHz
 
-/*ÉÈÇøÊ×µØÖ·
+/*æ‰‡åŒºé¦–åœ°å€
 Start Address of Sector
 Each Sector contains 512 bytes*/
 #define IAP_ADDRESS 0x0000

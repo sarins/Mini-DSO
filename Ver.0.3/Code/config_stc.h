@@ -7,12 +7,12 @@
 //#include <STC8.H>
 //#define DEBUG
 
-/* ADC²ÉÑùÍ¨µÀÉèÖÃ
+/* ADCé‡‡æ ·é€šé“è®¾ç½®
    ADC Channel Setup */
 #define ADC_DSO ADC_CHS_06
 #define ADC_BAT ADC_CHS_04
 
-/* ÌØÊâ¹¦ÄÜ¼Ä´æÆ÷
+/* ç‰¹æ®ŠåŠŸèƒ½å¯„å­˜å™¨
     Special Function Register */
 // sfr AUXR = 0x8e;
 // sfr P0M0 = 0x94;
@@ -33,22 +33,22 @@ __sfr __at (0x95) P2M1;
 __sfr __at (0xb2) P3M0;
 __sfr __at (0xb1) P3M1;
 
-/* EC11±àÂëÆ÷¹Ü½ÅÉèÖÃ
+/* EC11ç¼–ç å™¨ç®¡è„šè®¾ç½®
    Setup EC11 Encoder Pin */
-#define EC11_KEY P3_3 //±àÂëÆ÷°´¼üÁ¬½ÓÍâ²¿ÖĞ¶Ï1 connect to External Interrupt 1
-#define EC11_A P3_2   //±àÂëÆ÷AÂö³åÁ¬½ÓÍâ²¿ÖĞ¶Ï0 connect to External Interrupt 0
-#define EC11_B P3_4   //±àÂëÆ÷BÂö³åÁ¬½ÓÆÕÍ¨IO¿Ú connect to GPIO
+#define EC11_KEY P3_3 //ç¼–ç å™¨æŒ‰é”®è¿æ¥å¤–éƒ¨ä¸­æ–­1 connect to External Interrupt 1
+#define EC11_A P3_2   //ç¼–ç å™¨Aè„‰å†²è¿æ¥å¤–éƒ¨ä¸­æ–­0 connect to External Interrupt 0
+#define EC11_B P3_4   //ç¼–ç å™¨Bè„‰å†²è¿æ¥æ™®é€šIOå£ connect to GPIO
 
-/* ²ÉÑùÔËĞĞÖ¸Ê¾µÆ
+/* é‡‡æ ·è¿è¡ŒæŒ‡ç¤ºç¯
    Indicator for sampling running */
 #define P_Ready P1_1
 
 /*  OLED Pin */
-#define OLED_SCLK P2_7 //Ê±ÖÓ£¨D0/SCLK£©
-#define OLED_SDIN P2_6 //Êı¾İ£¨D1/MOSI£©
-#define OLED_RST P2_5  //¸´Î»£¨RES£©
-#define OLED_DC P2_4   //Êı¾İ/ÃüÁî¿ØÖÆ£¨DC£©
-#define OLED_CS P2_3   //Æ¬Ñ¡£¨CS£©
+#define OLED_SCLK P2_7 //æ—¶é’Ÿï¼ˆD0/SCLKï¼‰
+#define OLED_SDIN P2_6 //æ•°æ®ï¼ˆD1/MOSIï¼‰
+#define OLED_RST P2_5  //å¤ä½ï¼ˆRESï¼‰
+#define OLED_DC P2_4   //æ•°æ®/å‘½ä»¤æ§åˆ¶ï¼ˆDCï¼‰
+#define OLED_CS P2_3   //ç‰‡é€‰ï¼ˆCSï¼‰
 
 #ifdef DEBUG
 #define P15 P1_5

@@ -27,7 +27,7 @@
 
 #include "settings.h"
 
-    //µ¥Æ¬»úËÙ¶ÈÏŞÖÆ£¬µ¥´ÎºÍÆÕÍ¨´¥·¢µÄÖĞ¼ä¼ÆËãÔì³Éµ¥Æ¬»úÎŞ·¨Íê³É100usÇø¼ä¼ÆËã
+    //å•ç‰‡æœºé€Ÿåº¦é™åˆ¶ï¼Œå•æ¬¡å’Œæ™®é€šè§¦å‘çš„ä¸­é—´è®¡ç®—é€ æˆå•ç‰‡æœºæ— æ³•å®Œæˆ100usåŒºé—´è®¡ç®—
     //MCU speed limitation result in the Single Sweep and Normal Sweep calculations could not complete in 100us time interval.
     void
     Check_MinTimeInterval()
@@ -259,61 +259,61 @@ void change_OLED_Brightness(__bit i)
 
 void Change_Val(__bit i)
 {
-    /* °´ÏÂÍ¬Ê±Ğı×ª±àÂëÆ÷
+    /* æŒ‰ä¸‹åŒæ—¶æ—‹è½¬ç¼–ç å™¨
        Rotating Encoder while pressing */
     if (EC11PressAndRotate)
     {
-        //ÉèÖÃ½çÃæ
+        //è®¾ç½®ç•Œé¢
         //In settings
         if (InSettings)
         {
             change_OptionInSettings(i);
         }
 
-        //²¨ĞÎ¹ö¶¯Ä£Ê½
+        //æ³¢å½¢æ»šåŠ¨æ¨¡å¼
         //In waveform scroll mode
         else if (WaveScroll)
         {
             change_RulerV(i);
-            WaveUpdate = 1; //ÖÃÎ»²¨ĞÎ¸üĞÂ±êÖ¾
+            WaveUpdate = 1; //ç½®ä½æ³¢å½¢æ›´æ–°æ ‡å¿—
         }
 
-        //·Ç²¨ĞÎ¹ö¶¯Ä£Ê½
+        //éæ³¢å½¢æ»šåŠ¨æ¨¡å¼
         //Not in waveform scroll mode
         else
         {
             change_OptionInChart(i);
-            //ÇĞ»»Ñ¡ÏîÊ±£¬²»Çå¿Õ²¨ĞÎ
+            //åˆ‡æ¢é€‰é¡¹æ—¶ï¼Œä¸æ¸…ç©ºæ³¢å½¢
             //Not to clear waveform when switch options
             ClearWave = 0;
         }
     }
 
-    /* ÔÚÉèÖÃ½çÃæĞı×ª±àÂëÆ÷
+    /* åœ¨è®¾ç½®ç•Œé¢æ—‹è½¬ç¼–ç å™¨
        Rotating Encoder in settings */
     else if (InSettings)
     {
-        /* µ÷½Ú»æÍ¼Ä£Ê½
+        /* è°ƒèŠ‚ç»˜å›¾æ¨¡å¼
            Ajust Plot Mode */
         if (OptionInSettings == 0)
             change_PlotMode();
 
-        /* µ÷½ÚLSB
+        /* è°ƒèŠ‚LSB
            Adjust LSB */
         else if (OptionInSettings == 1)
             change_LSB(i);
 
-        /* µ÷½ÚOLED_Brightness
+        /* è°ƒèŠ‚OLED_Brightness
            Adjust OLED_Brightness */
         else if (OptionInSettings == 2)
             change_OLED_Brightness(i);
 
-        /* ÖÃÎ»ÉèÖÃ±£´æ±êÖ¾
+        /* ç½®ä½è®¾ç½®ä¿å­˜æ ‡å¿—
            Options need to be saved */
         OptionChanged = 1;
     }
 
-    /* ¹ö¶¯²¨ĞÎÄ£Ê½ÏÂĞı×ª±àÂëÆ÷
+    /* æ»šåŠ¨æ³¢å½¢æ¨¡å¼ä¸‹æ—‹è½¬ç¼–ç å™¨
        Rotate Encoder in waveform horizontal scroll mode */
     else if (WaveScroll)
     {
@@ -321,11 +321,11 @@ void Change_Val(__bit i)
         WaveUpdate = 1; 
     }
 
-    /* ÔÚÖ÷½çÃæĞı×ª±àÂëÆ÷
+    /* åœ¨ä¸»ç•Œé¢æ—‹è½¬ç¼–ç å™¨
        Rotate Encoder in Main interface */
     else
     {
-        /* µ÷½ÚÊ±¼äÇø¼ä
+        /* è°ƒèŠ‚æ—¶é—´åŒºé—´
            Adjust time scale */
         if (OptionInChart == 0)
         {
@@ -336,7 +336,7 @@ void Change_Val(__bit i)
             WaveLengthSum = 0;   
         }
 
-        /* µ÷½ÚÁ¿³Ì
+        /* è°ƒèŠ‚é‡ç¨‹
            Adjust measuring range */
         else if (OptionInChart == 1)
         {
@@ -345,7 +345,7 @@ void Change_Val(__bit i)
             ClearWave = 0;
         }
 
-        /* µ÷½Ú´¥·¢Öµ
+        /* è°ƒèŠ‚è§¦å‘å€¼
            Adjust Trigger level */
         else if (OptionInChart == 2)
         {
@@ -354,7 +354,7 @@ void Change_Val(__bit i)
             ClearWave = 0;
         }
 
-        /* µ÷½Ú´¥·¢·½Ïò
+        /* è°ƒèŠ‚è§¦å‘æ–¹å‘
            Adjust Trigger Slope */
         else if (OptionInChart == 3)
         {
@@ -363,19 +363,19 @@ void Change_Val(__bit i)
             ClearWave = 0;
         }
 
-        /* ¸ü¸Ä´¥·¢·½Ê½
+        /* æ›´æ”¹è§¦å‘æ–¹å¼
            Switch Trigger Mode */
         if (OptionInChart == 4)
         {
             change_TriMode(i);
-            Check_MinTimeInterval(); //¼ì²éÊ±¼äÇø¼äµÄºÏ·¨ĞÔ
+            Check_MinTimeInterval(); //æ£€æŸ¥æ—¶é—´åŒºé—´çš„åˆæ³•æ€§
             WaveUpdate = 1;
             ClearWave = 1;
             WaveLengthSumNum = 0; 
             WaveLengthSum = 0;   
         }
 
-        /* ÖÃÎ»ÉèÖÃ±£´æ±êÖ¾
+        /* ç½®ä½è®¾ç½®ä¿å­˜æ ‡å¿—
            Options need to be saved */
         OptionChanged = 1;
     }
@@ -419,21 +419,21 @@ __bit Save_Options()
     uint8 *p;
     check_Options();
     p = ops;
-    *p++ = Lsb >> 8;       //Ğ´ÈëLsb¸ß8Î» uint16
-    *p++ = Lsb;            //Ğ´ÈëLsbµÍ8Î»
-    *p++ = PlotMode;       //Ğ´Èë»æÍ¼Ä£Ê½ bit
-    *p++ = ScaleH;         //Ğ´ÈëÊ±¼äÇø¼ä char
-    *p++ = ScaleV_Auto;    //¶ÁÈ¡×Ô¶¯Á¿³Ì±êÖ¾ bit
-    *p++ = RulerVMax >> 8; //Ğ´Èë×İÖáµçÑ¹¸ß8Î» int16
-    *p++ = RulerVMax;      //Ğ´Èë×İÖáµçÑ¹µÍ8Î»
-    *p++ = RulerVMin >> 8; //Ğ´Èë×İÖáµçÑ¹¸ß8Î» int16
-    *p++ = RulerVMin;      //Ğ´Èë×İÖáµçÑ¹µÍ8Î»
-    *p++ = TriLevel >> 8;  //Ğ´Èë´¥·¢Öµ¸ß8Î» int16
-    *p++ = TriLevel;       //Ğ´Èë´¥·¢ÖµµÍ8Î»
-    *p++ = TriMode;        //Ğ´Èë´¥·¢·½Ê½ int8
-    *p++ = TriSlope;       //Ğ´Èë´¥·¢·½Ïò bit
-    *p++ = WaveScroll;     //Ğ´Èë²¨ĞÎ¹ö¶¯±êÖ¾ bit
-    *p = OLED_Brightness;  //Ğ´ÈëOLEDÁÁ¶È uint8
+    *p++ = Lsb >> 8;       //å†™å…¥Lsbé«˜8ä½ uint16
+    *p++ = Lsb;            //å†™å…¥Lsbä½8ä½
+    *p++ = PlotMode;       //å†™å…¥ç»˜å›¾æ¨¡å¼ bit
+    *p++ = ScaleH;         //å†™å…¥æ—¶é—´åŒºé—´ char
+    *p++ = ScaleV_Auto;    //è¯»å–è‡ªåŠ¨é‡ç¨‹æ ‡å¿— bit
+    *p++ = RulerVMax >> 8; //å†™å…¥çºµè½´ç”µå‹é«˜8ä½ int16
+    *p++ = RulerVMax;      //å†™å…¥çºµè½´ç”µå‹ä½8ä½
+    *p++ = RulerVMin >> 8; //å†™å…¥çºµè½´ç”µå‹é«˜8ä½ int16
+    *p++ = RulerVMin;      //å†™å…¥çºµè½´ç”µå‹ä½8ä½
+    *p++ = TriLevel >> 8;  //å†™å…¥è§¦å‘å€¼é«˜8ä½ int16
+    *p++ = TriLevel;       //å†™å…¥è§¦å‘å€¼ä½8ä½
+    *p++ = TriMode;        //å†™å…¥è§¦å‘æ–¹å¼ int8
+    *p++ = TriSlope;       //å†™å…¥è§¦å‘æ–¹å‘ bit
+    *p++ = WaveScroll;     //å†™å…¥æ³¢å½¢æ»šåŠ¨æ ‡å¿— bit
+    *p = OLED_Brightness;  //å†™å…¥OLEDäº®åº¦ uint8
 
     //	printf("Lsb=%hu\r\n",Lsb);
     //	printf("DrawMode=%X\r\n",PlotMode);
@@ -456,27 +456,27 @@ void Read_Options()
     uint8 *p;
     p = ops;
     EEPROM_Read(ops, sizeof(ops) / sizeof(ops[0]));
-    Lsb = *p++;           //¶ÁÈ¡Lsb¸ß8Î» uint16
-    Lsb <<= 8;            //½«µÍ8Î»ÒÆµ½¸ß°ËÎ»
-    Lsb |= *p++;          //¶ÁÈ¡LsbµÍ8Î»
-    PlotMode = *p++;      //¶ÁÈ¡»æÍ¼Ä£Ê½ bit
-    ScaleH = *p++;        //¶ÁÈ¡Ê±¼äÇø¼ä char
-    ScaleV_Auto = *p++;   //¶ÁÈ¡×Ô¶¯Á¿³Ì±êÖ¾ bit
-    RulerVMax = *p++;     //¶ÁÈ¡×İÖáµçÑ¹×î´óÖµ¸ß8Î» int16
-    RulerVMax <<= 8;      //½«µÍ8Î»ÒÆµ½¸ß°ËÎ»
-    RulerVMax |= *p++;    //¶ÁÈ¡×İÖáµçÑ¹×î´óÖµµÍ8Î»
-    RulerVMin = *p++;     //¶ÁÈ¡×İÖáµçÑ¹×îĞ¡¸ß8Î» int16
-    RulerVMin <<= 8;      //½«µÍ8Î»ÒÆµ½¸ß°ËÎ»
-    RulerVMin |= *p++;    //¶ÁÈ¡×İÖáµçÑ¹×îĞ¡µÍ8Î»
-    TriLevel = *p++;      //¶ÁÈ¡´¥·¢Öµ¸ß8Î» int16
-    TriLevel <<= 8;       //½«µÍ8Î»ÒÆµ½¸ß°ËÎ»
-    TriLevel |= *p++;     //¶ÁÈ¡´¥·¢ÖµµÍ8Î»
-    TriMode = *p++;       //¶ÁÈ¡´¥·¢·½Ê½ int8
-    TriSlope = *p++;      //¶ÁÈ¡´¥·¢·½Ïò bit
-    WaveScroll = *p++;    //¶ÁÈ¡²¨ĞÎ¹ö¶¯±êÖ¾ bit
-    OLED_Brightness = *p; //¶ÁÈ¡OLEDÁÁ¶È uint8
+    Lsb = *p++;           //è¯»å–Lsbé«˜8ä½ uint16
+    Lsb <<= 8;            //å°†ä½8ä½ç§»åˆ°é«˜å…«ä½
+    Lsb |= *p++;          //è¯»å–Lsbä½8ä½
+    PlotMode = *p++;      //è¯»å–ç»˜å›¾æ¨¡å¼ bit
+    ScaleH = *p++;        //è¯»å–æ—¶é—´åŒºé—´ char
+    ScaleV_Auto = *p++;   //è¯»å–è‡ªåŠ¨é‡ç¨‹æ ‡å¿— bit
+    RulerVMax = *p++;     //è¯»å–çºµè½´ç”µå‹æœ€å¤§å€¼é«˜8ä½ int16
+    RulerVMax <<= 8;      //å°†ä½8ä½ç§»åˆ°é«˜å…«ä½
+    RulerVMax |= *p++;    //è¯»å–çºµè½´ç”µå‹æœ€å¤§å€¼ä½8ä½
+    RulerVMin = *p++;     //è¯»å–çºµè½´ç”µå‹æœ€å°é«˜8ä½ int16
+    RulerVMin <<= 8;      //å°†ä½8ä½ç§»åˆ°é«˜å…«ä½
+    RulerVMin |= *p++;    //è¯»å–çºµè½´ç”µå‹æœ€å°ä½8ä½
+    TriLevel = *p++;      //è¯»å–è§¦å‘å€¼é«˜8ä½ int16
+    TriLevel <<= 8;       //å°†ä½8ä½ç§»åˆ°é«˜å…«ä½
+    TriLevel |= *p++;     //è¯»å–è§¦å‘å€¼ä½8ä½
+    TriMode = *p++;       //è¯»å–è§¦å‘æ–¹å¼ int8
+    TriSlope = *p++;      //è¯»å–è§¦å‘æ–¹å‘ bit
+    WaveScroll = *p++;    //è¯»å–æ³¢å½¢æ»šåŠ¨æ ‡å¿— bit
+    OLED_Brightness = *p; //è¯»å–OLEDäº®åº¦ uint8
 
-    check_Options(); //¼ì²éÑ¡ÏîºÏ·¨ĞÔ
+    check_Options(); //æ£€æŸ¥é€‰é¡¹åˆæ³•æ€§
     //	printf("Lsb=%hu\r\n",Lsb);
     //	printf("DrawMode=%X\r\n",PlotMode);
     //	printf("ScaleH=%bd\r\n",ScaleH);
