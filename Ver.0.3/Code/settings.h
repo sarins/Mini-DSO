@@ -45,11 +45,11 @@
 
 #define SCALE_H_MAX 11 //时间区间最大序号
 #define SCALE_H_MIN 0  //时间区间最小序号
-#define MAX_V 30000	   //纵轴电压最大值 mV
-#define MIN_V 0		   //纵轴电压最小值 mV
-#define LSB_MAX 750	   //分压系数，分压比x100,5k和1k电阻分压系数为(5+1)/1*100,
-					   //算法限制：由于STC8A8K储存的最大整数是2^32, LSB最大不能超过2^32/4095/1349=777
-					   //12位ADC范围=2^12=4095,BGV=1349mV
+#define MAX_V 30000    //纵轴电压最大值 mV
+#define MIN_V 0        //纵轴电压最小值 mV
+#define LSB_MAX 750    //分压系数，分压比x100,5k和1k电阻分压系数为(5+1)/1*100,
+                       //算法限制：由于STC8A8K储存的最大整数是2^32, LSB最大不能超过2^32/4095/1349=777
+                       //12位ADC范围=2^12=4095,BGV=1349mV
 #define LSB_MIN 50
 
 void Change_Val(__bit);

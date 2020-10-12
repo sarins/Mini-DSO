@@ -53,11 +53,10 @@
 // sfr ADC_RES = 0xbd;
 // sfr ADC_RESL = 0xbe;
 // sfr ADCCFG = 0xde;
-__sfr __at (0xbc) ADC_CONTR;
-__sfr __at (0xbd) ADC_RES;
-__sfr __at (0xbe) ADC_RESL;
-__sfr __at (0xde) ADCCFG;
-
+__sfr __at(0xbc) ADC_CONTR;
+__sfr __at(0xbd) ADC_RES;
+__sfr __at(0xbe) ADC_RESL;
+__sfr __at(0xde) ADCCFG;
 
 //Bandgap电压在RAM和ROM中的存放地址，单位mV，RAM中的数据有可能被冲掉，所以推荐使用ROM中的数据，RAM中的数据可以作为备选
 //WORD idata Vbg_RAM _at_ 0xef; //对于只有256字节RAM的MCU存放地址为0EFH

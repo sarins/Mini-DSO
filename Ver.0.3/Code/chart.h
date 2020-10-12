@@ -24,7 +24,7 @@
 
 /* 屏幕上波形显示区域
    Region for waveform on display*/
-#define CHART_H_MAX 126 
+#define CHART_H_MAX 126
 #define CHART_H_MIN 26
 #define CHART_V_MAX 52
 #define CHART_V_MIN 8

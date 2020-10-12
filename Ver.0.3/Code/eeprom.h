@@ -29,18 +29,18 @@ IAP/ISP Special Function Register*/
 // sfr ISP_CMD = 0xc5;
 // sfr ISP_TRIG = 0xc6;
 // sfr ISP_CONTR = 0xc7;
-__sfr __at (0xc2) IAP_DATA;
-__sfr __at (0xc3) IAP_ADDRH;
-__sfr __at (0xc4) IAP_ADDRL;
-__sfr __at (0xc5) IAP_CMD;
-__sfr __at (0xc6) IAP_TRIG;
-__sfr __at (0xc7) IAP_CONTR;
-__sfr __at (0xc2) ISP_DATA;
-__sfr __at (0xc3) ISP_ADDRH;
-__sfr __at (0xc4) ISP_ADDRL;
-__sfr __at (0xc5) ISP_CMD;
-__sfr __at (0xc6) ISP_TRIG;
-__sfr __at (0xc7) ISP_CONTR;
+__sfr __at(0xc2) IAP_DATA;
+__sfr __at(0xc3) IAP_ADDRH;
+__sfr __at(0xc4) IAP_ADDRL;
+__sfr __at(0xc5) IAP_CMD;
+__sfr __at(0xc6) IAP_TRIG;
+__sfr __at(0xc7) IAP_CONTR;
+__sfr __at(0xc2) ISP_DATA;
+__sfr __at(0xc3) ISP_ADDRH;
+__sfr __at(0xc4) ISP_ADDRL;
+__sfr __at(0xc5) ISP_CMD;
+__sfr __at(0xc6) ISP_TRIG;
+__sfr __at(0xc7) ISP_CONTR;
 
 #define IAP_IDL 0x00   //空操作 / No operation
 #define IAP_READ 0x01  //读EEPROM / Read EEPROM

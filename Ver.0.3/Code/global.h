@@ -22,9 +22,9 @@
 #define int16 signed int
 #endif
 
-#define SAMPLE_NUM 220      //采样缓存点数，显示波形需101个点，查找触发点从第51个点到第SAMPLE_NUM-50个点，
-#define PRE_BUF_NUM 62      //单次触发和普通触发的预缓存点数大于等于52
-#define AFT_BUF_NUM 158     //单次触发和普通触发的触发后缓存点数等于SAMPLE_NUM-PRE_BUF_NUM
+#define SAMPLE_NUM 220  //采样缓存点数，显示波形需101个点，查找触发点从第51个点到第SAMPLE_NUM-50个点，
+#define PRE_BUF_NUM 62  //单次触发和普通触发的预缓存点数大于等于52
+#define AFT_BUF_NUM 158 //单次触发和普通触发的触发后缓存点数等于SAMPLE_NUM-PRE_BUF_NUM
 
 #define _nop_() __asm nop __endasm
 
