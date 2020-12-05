@@ -1,10 +1,10 @@
 #ifndef CHART_H
 #define CHART_H
 
-#include "ssd1306.h"
 #include "adc_stc8.h"
-#include "settings.h"
 #include "config_stc.h"
+#include "settings.h"
+#include "ssd1306.h"
 
 #ifndef uint8
 #define uint8 unsigned char

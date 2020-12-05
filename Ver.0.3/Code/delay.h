@@ -36,6 +36,6 @@ void Delay171us(void);
 void Delay51us(void);
 void Delay18us(void);
 void Delay6us(void);
-//void Delay1us(void);
+// void Delay1us(void);
 
 #endif
